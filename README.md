@@ -1,2 +1,2 @@
 # DSUR
-Following the book &amp; exercises of "Discovering Statistics Using R" by Andy Field
+Following the book & exercises of "Discovering Statistics Using R" by Andy Field
