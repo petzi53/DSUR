@@ -1,0 +1,105 @@
+---
+title: "Tutorial"
+tutorial:
+  id: "debc2ab2-a03e-4b1f-ba1f-72dd21fac050"
+  version: 3.1
+output: 
+    learnr::tutorial:
+        progressive: true
+        allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(checkr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.checker = checkr::check_for_learnr)
+```
+
+## Topic 0
+
+### My Exercise
+
+Use the rep() function, with 1:4 as an input, to generate the 12-element vector 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4
+
+```{r exercise1, exercise=TRUE}
+
+```
+
+
+```{r exercise1-check}
+check_exer_1_v0(USER_CODE)
+```
+
+
+## Topic 1
+
+### Exercise 
+
+*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+
+Write the R code required to add two plus two:
+
+```{r add-two-and-two, exercise=TRUE, exercise.lines=1}
+
+
+```
+
+```{r add-two-and-two-check}
+check_add_two_and_two(USER_CODE)
+```
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+## Topic 3
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+

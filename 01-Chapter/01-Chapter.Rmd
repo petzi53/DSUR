@@ -2,45 +2,73 @@
 title: "Chapter 01 of DSUR"
 author: "Peter Baumgartner"
 date: "`r Sys.Date()`"
-output:
-  pdf_document:
-    pandoc_args: --number-offset=0,0
-    toc: yes
-    toc_depth: '4'
-    latex_engine: xelatex
-  word_document:
-    toc: yes
-    toc_depth: '4'
-  html_notebook:
-    fig_caption: yes
-    number_sections: yes
-    pandoc_args: --number-offset=0,0
-    toc: yes
-    toc_depth: 4
-  github_document:
-    toc: yes
-    toc_depth: 4
-  html_document:
-    fig_caption: yes
-    keep_md: yes
-    number_sections: yes
-    pandoc_args: --number-offset=0,0
-    toc: yes
-    toc_depth: 4
+output: 
+    learnr::tutorial:
+        progressive: true
+        allow_skip: true
+runtime: shiny_prerendered
 ---
-```{r label = "global-options", echo=FALSE, highlight=TRUE}
-knitr::opts_chunk$set(
-        message = F,
-        error = F,
-        warning = F,
-        comment = NA,
-        highlight = T,
-        prompt = T
-        )
 
+```{r setup, include=FALSE}
+library(learnr)
+library(checkr)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.checker = checkr::check_for_learnr)
+assign("my_points", 0, envir = .GlobalEnv)
 ```
 
-# Basics: Measures of Central Tendency
+# DSUR: Chapter 01
+
+## Quiz
+
+### Question 01
+
+```{r v14-quiz-chapter-01-01}
+  question("What is a confounding variable?",
+    answer("A variable that is manipulated by the experimenter."),
+    answer("A variable that affects the outcome being measured as well as or instead of the independent variable.", correct = TRUE),
+    answer("A variable that has not been measured."),
+    answer("A variable that is made up only of categories."),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.")
+  )
+```
+
+### Question 02
+
+
+```{r quiz-chapter-01-02}
+question("'Children can learn a second language faster before the age of 7'. Is this statement:",
+    answer("A null hypothesis"),
+    answer("A non‐scientific statement."),
+    answer("A two‐tailed hypothesis."),
+    answer("A one‐tailed hypothesis.", correct = TRUE)
+  )
+```
+
+### Another quiz
+
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz 1",
+  question("What number is the letter A in the *English* alphabet?",
+    answer("8"),
+    answer("14"),
+    answer("1", correct = TRUE),
+    answer("23")
+  ),
+  question("Where are you right now? (select ALL that apply)",
+    answer("Planet Earth", correct = TRUE),
+    answer("Pluto"),
+    answer("At a computing device", correct = TRUE),
+    answer("In the Milky Way", correct = TRUE),
+    incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
+  )
+)
+```
+
+
+## Basics: Measures of Central Tendency
 
 ## How to get a small data set into R?
 

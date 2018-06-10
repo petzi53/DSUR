@@ -11,7 +11,7 @@
 
 <meta name="author" content="Peter Baumgartner" />
 
-<meta name="date" content="2018-05-11" />
+<meta name="date" content="2018-06-08" />
 
 <title>Chapter 01 of DSUR</title>
 
@@ -171,30 +171,34 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Chapter 01 of DSUR</h1>
 <h4 class="author"><em>Peter Baumgartner</em></h4>
-<h4 class="date"><em>2018-05-11</em></h4>
+<h4 class="date"><em>2018-06-08</em></h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#basics-measures-of-central-tendency"><span class="toc-section-number">1</span> Basics: Measures of central tendency</a><ul>
+<li><a href="#basics-measures-of-central-tendency"><span class="toc-section-number">1</span> Basics: Measures of Central Tendency</a><ul>
 <li><a href="#how-to-get-a-small-data-set-into-r"><span class="toc-section-number">1.1</span> How to get a small data set into R?</a><ul>
 <li><a href="#assign-values-to-a-vector"><span class="toc-section-number">1.1.1</span> Assign values to a vector</a></li>
 <li><a href="#read-data-values-from-keyboard"><span class="toc-section-number">1.1.2</span> Read data values from keyboard</a></li>
 </ul></li>
-<li><a href="#mode"><span class="toc-section-number">1.2</span> Mode</a></li>
+<li><a href="#the-mode"><span class="toc-section-number">1.2</span> The Mode</a><ul>
+<li><a href="#variante-1-simple-but-good"><span class="toc-section-number">1.2.1</span> Variante 1: Simple but good!</a></li>
+<li><a href="#version-2-with-na"><span class="toc-section-number">1.2.2</span> Version 2: with NA</a></li>
+<li><a href="#version-3-with-package-modeest"><span class="toc-section-number">1.2.3</span> Version 3: with package <code>modeest</code></a></li>
+</ul></li>
 <li><a href="#the-median"><span class="toc-section-number">1.3</span> The Median</a><ul>
 <li><a href="#just-the-function"><span class="toc-section-number">1.3.1</span> Just the function</a></li>
 <li><a href="#without-outlier"><span class="toc-section-number">1.3.2</span> Without outlier</a></li>
 </ul></li>
-<li><a href="#the-mean"><span class="toc-section-number">1.4</span> The mean</a><ul>
+<li><a href="#the-mean"><span class="toc-section-number">1.4</span> The Mean</a><ul>
 <li><a href="#just-the-function-1"><span class="toc-section-number">1.4.1</span> Just the function</a></li>
 <li><a href="#without-outlier-1"><span class="toc-section-number">1.4.2</span> Without outlier</a></li>
 <li><a href="#with-na-value-not-removed"><span class="toc-section-number">1.4.3</span> With NA Value not removed</a></li>
 <li><a href="#with-na-value-removed"><span class="toc-section-number">1.4.4</span> With NA Value removed</a></li>
 <li><a href="#with-outlier-but-trimmed"><span class="toc-section-number">1.4.5</span> With outlier but trimmed</a></li>
 </ul></li>
-<li><a href="#the-range"><span class="toc-section-number">1.5</span> The range</a><ul>
+<li><a href="#the-range"><span class="toc-section-number">1.5</span> The Range</a><ul>
 <li><a href="#just-the-function-2"><span class="toc-section-number">1.5.1</span> Just the function</a></li>
 <li><a href="#without-outlier-2"><span class="toc-section-number">1.5.2</span> Without outlier</a></li>
 </ul></li>
@@ -203,8 +207,10 @@ $(document).ready(function () {
 <li><a href="#just-the-function-3"><span class="toc-section-number">1.7.1</span> Just the function</a></li>
 <li><a href="#computed-with-type-1"><span class="toc-section-number">1.7.2</span> Computed with type = 1</a></li>
 </ul></li>
-<li><a href="#self-test-p.25"><span class="toc-section-number">1.8</span> Self-Test p.25</a></li>
-<li><a href="#self-test-p.27"><span class="toc-section-number">1.9</span> Self-Test p.27</a></li>
+<li><a href="#self-tests"><span class="toc-section-number">1.8</span> Self-Tests</a><ul>
+<li><a href="#self-test-p.25"><span class="toc-section-number">1.8.1</span> Self-test p.25</a></li>
+<li><a href="#self-test-p.27"><span class="toc-section-number">1.8.2</span> Self-Test p.27</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </div>
@@ -212,21 +218,10 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB0aWR5dmVyc2Vcblx1MDAxYlszMG3ilIDilIAgXHUwMDFiWzFtQXR0YWNoaW5nIHBhY2thZ2VzXHUwMDFiWzIybSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMi4xIOKUgOKUgFx1MDAxYlszOW1cblx1MDAxYlszMG1cdTAwMWJbMzJt4pyUXHUwMDFiWzMwbSBcdTAwMWJbMzRtZ2dwbG90Mlx1MDAxYlszMG0gMi4yLjEgICAgIFx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG1wdXJyciAgXHUwMDFiWzMwbSAwLjIuNFxuXHUwMDFiWzMybeKclFx1MDAxYlszMG0gXHUwMDFiWzM0bXRpYmJsZSBcdTAwMWJbMzBtIDEuNC4yICAgICBcdTAwMWJbMzJt4pyUXHUwMDFiWzMwbSBcdTAwMWJbMzRtZHBseXIgIFx1MDAxYlszMG0gMC43LjRcblx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG10aWR5ciAgXHUwMDFiWzMwbSAwLjguMCAgICAgXHUwMDFiWzMybeKclFx1MDAxYlszMG0gXHUwMDFiWzM0bXN0cmluZ3JcdTAwMWJbMzBtIDEuMy4xXG5cdTAwMWJbMzJt4pyUXHUwMDFiWzMwbSBcdTAwMWJbMzRtcmVhZHIgIFx1MDAxYlszMG0gMS4xLjEgICAgIFx1MDAxYlszMm3inJRcdTAwMWJbMzBtIFx1MDAxYlszNG1mb3JjYXRzXHUwMDFiWzMwbSAwLjMuMFx1MDAxYlszOW1cblx1MDAxYlszMG3ilIDilIAgXHUwMDFiWzFtQ29uZmxpY3RzXHUwMDFiWzIybSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxuXHUwMDFiWzMxbeKcllx1MDAxYlszMG0gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzMwbTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzMwbSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzBtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbeKcllx1MDAxYlszMG0gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzMwbTo6XHUwMDFiWzMybWxhZygpXHUwMDFiWzMwbSAgICBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzBtOjpsYWcoKVx1MDAxYlszOW1cbiJ9 -->
-<pre><code>Loading required package: tidyverse
-[30m── [1mAttaching packages[22m ─────────────────────────────────────────────────── tidyverse 1.2.1 ──[39m
-[30m[32m✔[30m [34mggplot2[30m 2.2.1     [32m✔[30m [34mpurrr  [30m 0.2.4
-[32m✔[30m [34mtibble [30m 1.4.2     [32m✔[30m [34mdplyr  [30m 0.7.4
-[32m✔[30m [34mtidyr  [30m 0.8.0     [32m✔[30m [34mstringr[30m 1.3.1
-[32m✔[30m [34mreadr  [30m 1.1.1     [32m✔[30m [34mforcats[30m 0.3.0[39m
-[30m── [1mConflicts[22m ────────────────────────────────────────────────────── tidyverse_conflicts() ──
-[31m✖[30m [34mdplyr[30m::[32mfilter()[30m masks [34mstats[30m::filter()
-[31m✖[30m [34mdplyr[30m::[32mlag()[30m    masks [34mstats[30m::lag()[39m</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="basics-measures-of-central-tendency" class="section level1">
-<h1><span class="header-section-number">1</span> Basics: Measures of central tendency</h1>
+<h1><span class="header-section-number">1</span> Basics: Measures of Central Tendency</h1>
 <div id="how-to-get-a-small-data-set-into-r" class="section level2">
 <h2><span class="header-section-number">1.1</span> How to get a small data set into R?</h2>
 <p>Number of friends of 11 Facebook user: 108, 103, 252, 121, 93, 57, 40, 53, 22, 116, 98.</p>
@@ -240,16 +235,13 @@ nff &lt;- c(108, 103, 252, 121, 93, 57, 40, 53, 22, 116, 98)
 nff &lt;- sort(nff)
 nff</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMjIgIDQwICA1MyAgNTcgIDkzICA5OCAxMDMgMTA4IDExNiAxMjEgMjUyXG4ifQ== -->
-<pre><code> [1]  22  40  53  57  93  98 103 108 116 121 252</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 <div id="read-data-values-from-keyboard" class="section level3">
 <h3><span class="header-section-number">1.1.2</span> Read data values from keyboard</h3>
-<p>After running the following code you have to set your curso into the console and provide the data. There are 2 possibilities: * Enter the data manually and separate each entry with ENTER * Copy a string of data (e.g. from a PDF table), where each data is spearated by a blank</p>
-<p>In both cases: Terminate the input with an extra ENTER</p>
+<p>After running the following code you have to set your cursor into the console and provide the data. There are 2 possibilities: * Enter the data manually and separate each entry with &gt;ENTER&lt; * Copy a string of data (e.g. from a PDF table), where each data is spearated by a blank</p>
+<p>In both cases: Terminate the input with an extra &gt;ENTER&lt;</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjpbIm5mZl9zY2FuIDwtIGFzLnZlY3RvcihzY2FuKGZpbGUgPSBcIlwiKSkiLCJuZmYgPC0gc29ydChuZmZfc2NhbikiLCJuZmZfc2NhbiJdfQ== -->
@@ -261,8 +253,8 @@ nff_scan</code></pre>
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="mode" class="section level2">
-<h2><span class="header-section-number">1.2</span> Mode</h2>
+<div id="the-mode" class="section level2">
+<h2><span class="header-section-number">1.2</span> The Mode</h2>
 <p>There is no mode-function in the base R module. See <a href="https://bit.ly/R-mode" class="uri">https://bit.ly/R-mode</a>. But there are many possibilites to programm this function.</p>
 <p>Before I will demonstrate this, I need to add another number into the data set in order to get the frequencey of one number higher than the others.</p>
 <!-- rnb-text-end -->
@@ -272,7 +264,8 @@ nff_scan</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Variante 1: Simple but goot!</p>
+<div id="variante-1-simple-but-good" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Variante 1: Simple but good!</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTW9kZSA8LSBmdW5jdGlvbih4KSB7XG4gIHV4IDwtIHVuaXF1ZSh4KVxuICB1eFt3aGljaC5tYXgodGFidWxhdGUobWF0Y2goeCwgdXgpKSldXG59XG5Nb2RlKG5mZl9tb2RlKVxuYGBgIn0= -->
@@ -282,12 +275,11 @@ nff_scan</code></pre>
 }
 Mode(nff_mode)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDUzXG4ifQ== -->
-<pre><code>[1] 53</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Version 2: with NA</p>
+</div>
+<div id="version-2-with-na" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Version 2: with NA</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTW9kZSA8LSBmdW5jdGlvbih4LCBuYS5ybSA9IEZBTFNFKSB7XG4gICAgaWYgKG5hLnJtKSB7XG4gICAgICAgIHggPSB4WyFpcy5uYSh4KV1cbiAgICB9XG4gICAgdXggPC0gdW5pcXVlKHgpXG4gICAgdXhbd2hpY2gubWF4KHRhYnVsYXRlKG1hdGNoKHgsIHV4KSkpXVxufVxuTW9kZShuZmZfbW9kZSlcbmBgYCJ9 -->
@@ -300,31 +292,20 @@ Mode(nff_mode)</code></pre>
 }
 Mode(nff_mode)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDUzXG4ifQ== -->
-<pre><code>[1] 53</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="version-3-with-package-modeest" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Version 3: with package <code>modeest</code></h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtb2RlZXN0KVxuYGBgIn0= -->
-<pre class="r"><code>library(modeest)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtb2RlZXN0KVxubWx2KG5mZl9tb2RlLCBtZXRob2QgPSBcIm1mdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>library(modeest)
+mlv(nff_mode, method = &quot;mfv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5UaGlzIGlzIHBhY2thZ2UgJ21vZGVlc3QnIHdyaXR0ZW4gYnkgUC4gUE9OQ0VULlxuRm9yIGEgY29tcGxldGUgbGlzdCBvZiBmdW5jdGlvbnMsIHVzZSAnbGlicmFyeShoZWxwID0gXCJtb2RlZXN0XCIpJyBvciAnaGVscC5zdGFydCgpJy5cbiJ9 -->
-<pre><code>
-This is package 'modeest' written by P. PONCET.
-For a complete list of functions, use 'library(help = &quot;modeest&quot;)' or 'help.start()'.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWx2KG5mZl9tb2RlLCBtZXRob2QgPSBcIm1mdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>mlv(nff_mode, method = &quot;mfv&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTW9kZSAobW9zdCBsaWtlbHkgdmFsdWUpOiA1MyBcbkJpY2tlbCdzIG1vZGFsIHNrZXduZXNzOiAwLjUgXG5DYWxsOiBtbHYuZGVmYXVsdCh4ID0gbmZmX21vZGUsIG1ldGhvZCA9IFwibWZ2XCIpIFxuIn0= -->
-<pre><code>Mode (most likely value): 53 
-Bickel's modal skewness: 0.5 
-Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
 </div>
 <div id="the-median" class="section level2">
 <h2><span class="header-section-number">1.3</span> The Median</h2>
@@ -335,9 +316,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWFuKG5mZilcbmBgYCJ9 -->
 <pre class="r"><code>median(nff)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDk4XG4ifQ== -->
-<pre><code>[1] 98</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -345,18 +323,16 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <h3><span class="header-section-number">1.3.2</span> Without outlier</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWFuKG5mZlsxOjEwXSlcbmBgYCJ9 -->
-<pre class="r"><code>median(nff[1:10])</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWFuKG5mZlsxOjEwXSlcblxuYGBgIn0= -->
+<pre class="r"><code>median(nff[1:10])
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDk1LjVcbiJ9 -->
-<pre><code>[1] 95.5</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
 <div id="the-mean" class="section level2">
-<h2><span class="header-section-number">1.4</span> The mean</h2>
+<h2><span class="header-section-number">1.4</span> The Mean</h2>
 <div id="just-the-function-1" class="section level3">
 <h3><span class="header-section-number">1.4.1</span> Just the function</h3>
 <!-- rnb-text-end -->
@@ -364,9 +340,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmYpXG5gYGAifQ== -->
 <pre class="r"><code>mean(nff)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDk2LjYzNjM2XG4ifQ== -->
-<pre><code>[1] 96.63636</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -377,9 +350,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmZbMToxMF0pXG5gYGAifQ== -->
 <pre class="r"><code>mean(nff[1:10])</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDgxLjFcbiJ9 -->
-<pre><code>[1] 81.1</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -390,9 +360,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmZbYygxOjEwLCBOQSldKVxuYGBgIn0= -->
 <pre class="r"><code>mean(nff[c(1:10, NA)])</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIE5BXG4ifQ== -->
-<pre><code>[1] NA</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -403,9 +370,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmZbYygxOjEwLCBOQSldLCBuYS5ybSA9IFRSVUUpXG5gYGAifQ== -->
 <pre class="r"><code>mean(nff[c(1:10, NA)], na.rm = TRUE)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDgxLjFcbiJ9 -->
-<pre><code>[1] 81.1</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -413,24 +377,16 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 <h3><span class="header-section-number">1.4.5</span> With outlier but trimmed</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmYsIHRyaW0gPSAwLjEpXG5gYGAifQ== -->
-<pre class="r"><code>mean(nff, trim = 0.1)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmYsIHRyaW0gPSAwLjEpXG5tZWFuKG5mZlsyOjEwXSlcbmBgYCJ9 -->
+<pre class="r"><code>mean(nff, trim = 0.1)
+mean(nff[2:10])</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDg3LjY2NjY3XG4ifQ== -->
-<pre><code>[1] 87.66667</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbihuZmZbMjoxMF0pXG5gYGAifQ== -->
-<pre class="r"><code>mean(nff[2:10])</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDg3LjY2NjY3XG4ifQ== -->
-<pre><code>[1] 87.66667</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
 <div id="the-range" class="section level2">
-<h2><span class="header-section-number">1.5</span> The range</h2>
+<h2><span class="header-section-number">1.5</span> The Range</h2>
 <div id="just-the-function-2" class="section level3">
 <h3><span class="header-section-number">1.5.1</span> Just the function</h3>
 <!-- rnb-text-end -->
@@ -440,9 +396,6 @@ Call: mlv.default(x = nff_mode, method = &quot;mfv&quot;) </code></pre>
 xr &lt;- x[2] - x[1]
 cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmFuZ2U6IDI1MiAtIDIyID0gMjMwXG4ifQ== -->
-<pre><code>Range: 252 - 22 = 230</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -455,9 +408,6 @@ cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pr
 xr &lt;- x[2] - x[1]
 cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmFuZ2U6IDEyMSAtIDIyID0gOTlcbiJ9 -->
-<pre><code>Range: 121 - 22 = 99</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -469,10 +419,6 @@ cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pr
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucXVhbnRpbGUobmZmLCB0eXBlID0gMSlcbmBgYCJ9 -->
 <pre class="r"><code>quantile(nff, type = 1)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAwJSAgMjUlICA1MCUgIDc1JSAxMDAlIFxuICAyMiAgIDUzICAgOTggIDExNiAgMjUyIFxuIn0= -->
-<pre><code>  0%  25%  50%  75% 100% 
-  22   53   98  116  252 </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -485,9 +431,6 @@ cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pr
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSVFSKG5mZilcbmBgYCJ9 -->
 <pre class="r"><code>IQR(nff)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDU3XG4ifQ== -->
-<pre><code>[1] 57</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -499,18 +442,17 @@ cat(&quot;Range:&quot;, x[2], &quot;-&quot;, x[1], &quot;=&quot;, xr)</code></pr
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSVFSKG5mZiwgdHlwZSA9IDEpXG5gYGAifQ== -->
 <pre class="r"><code>IQR(nff, type = 1)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDYzXG4ifQ== -->
-<pre><code>[1] 63</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="self-test-p.25" class="section level2">
-<h2><span class="header-section-number">1.8</span> Self-Test p.25</h2>
+<div id="self-tests" class="section level2">
+<h2><span class="header-section-number">1.8</span> Self-Tests</h2>
+<div id="self-test-p.25" class="section level3">
+<h3><span class="header-section-number">1.8.1</span> Self-test p.25</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJlYWRtaWxsIDwtIGMoMTgsMTYsMTgsMjQsMjMsMjIsMjIsMjMsMjYsMjksMzIsMzQsMzQsMzYsMzYsNDMsNDIsNDksNDYsNDYsNTcpXG5Nb2RlIDwtIGZ1bmN0aW9uKHgsIG5hLnJtID0gRkFMU0UpIHtcbiAgICBpZiAobmEucm0pIHtcbiAgICAgICAgeCA9IHhbIWlzLm5hKHgpXVxuICAgIH1cbiAgICB1eCA8LSB1bmlxdWUoeClcbiAgICB0YWIgPC0gdGFidWxhdGUobWF0Y2goeCwgdXgpKTsgXG4gICAgdXhbdGFiID09IG1heCh0YWIpXVxuICAgIFxufVxuTW9kZSh0cmVhZG1pbGwpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHJlYWRtaWxsIDwtIGMoMTgsMTYsMTgsMjQsMjMsMjIsMjIsMjMsMjYsMjksMzIsMzQsMzQsMzYsMzYsNDMsNDIsNDksNDYsNDYsNTcpXG5Nb2RlIDwtIGZ1bmN0aW9uKHgsIG5hLnJtID0gRkFMU0UpIHtcbiAgICBpZiAobmEucm0pIHtcbiAgICAgICAgeCA9IHhbIWlzLm5hKHgpXVxuICAgIH1cbiAgICB1eCA8LSB1bmlxdWUoeClcbiAgICB0YWIgPC0gdGFidWxhdGUobWF0Y2goeCwgdXgpKTsgXG4gICAgdXhbdGFiID09IG1heCh0YWIpXVxuICAgIFxufVxuTW9kZSh0cmVhZG1pbGwpXG5tZWRpYW4odHJlYWRtaWxsKVxubWVhbih0cmVhZG1pbGwpXG5xdWFudGlsZSh0cmVhZG1pbGwsIHR5cGUgPSA2KVxucmFuZ2UodHJlYWRtaWxsKVxuSVFSKHRyZWFkbWlsbCwgdHlwZSA9IDYpXG5cbmBgYCJ9 -->
 <pre class="r"><code>treadmill &lt;- c(18,16,18,24,23,22,22,23,26,29,32,34,34,36,36,43,42,49,46,46,57)
 Mode &lt;- function(x, na.rm = FALSE) {
     if (na.rm) {
@@ -521,58 +463,31 @@ Mode &lt;- function(x, na.rm = FALSE) {
     ux[tab == max(tab)]
     
 }
-Mode(treadmill)</code></pre>
+Mode(treadmill)
+median(treadmill)
+mean(treadmill)
+quantile(treadmill, type = 6)
+range(treadmill)
+IQR(treadmill, type = 6)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE4IDIzIDIyIDM0IDM2IDQ2XG4ifQ== -->
-<pre><code>[1] 18 23 22 34 36 46</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWFuKHRyZWFkbWlsbClcbmBgYCJ9 -->
-<pre class="r"><code>median(treadmill)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMyXG4ifQ== -->
-<pre><code>[1] 32</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVhbih0cmVhZG1pbGwpXG5gYGAifQ== -->
-<pre class="r"><code>mean(treadmill)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMyLjE5MDQ4XG4ifQ== -->
-<pre><code>[1] 32.19048</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucXVhbnRpbGUodHJlYWRtaWxsLCB0eXBlID0gNilcbmBgYCJ9 -->
-<pre class="r"><code>quantile(treadmill, type = 6)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAwJSAgMjUlICA1MCUgIDc1JSAxMDAlIFxuMTYuMCAyMi41IDMyLjAgNDIuNSA1Ny4wIFxuIn0= -->
-<pre><code>  0%  25%  50%  75% 100% 
-16.0 22.5 32.0 42.5 57.0 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmFuZ2UodHJlYWRtaWxsKVxuYGBgIn0= -->
-<pre class="r"><code>range(treadmill)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDE2IDU3XG4ifQ== -->
-<pre><code>[1] 16 57</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSVFSKHRyZWFkbWlsbCwgdHlwZSA9IDYpXG5gYGAifQ== -->
-<pre class="r"><code>IQR(treadmill, type = 6)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIwXG4ifQ== -->
-<pre><code>[1] 20</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="self-test-p.27" class="section level2">
-<h2><span class="header-section-number">1.9</span> Self-Test p.27</h2>
-<p>What’s the probability that someone wo threw themselves of Beachy Head was 30 years or older?</p>
+<div id="self-test-p.27" class="section level3">
+<h3><span class="header-section-number">1.8.2</span> Self-Test p.27</h3>
+<p>What’s the probability that someone who threw themselves of Beachy Head was 30 years or older?</p>
 <ul>
 <li>First we convert 30 into a z-score. Suppose the mean of the suicide scores was 36, and the standard deviation 13; then 30 will bekomme (30-36)/13 = -0.4615385.</li>
 <li>We then look up this value in the column labelled “Bigger Portion” (i.e., the area above the value -0.4615385).</li>
-<li>I get the value of 32.28%, or put another way, there is a chance of 32.28% that a suicide victim was aged 30 or less. We can also say that there is a 67.72% chance that a suicide victim wa older than 30.</li>
+<li>I get the value of 32.28%, or put another way, there is a chance of 32.28% that a suicide victim was aged 30 or less. We can also say that there is a 67.72% chance that a suicide victim was older than 30.</li>
 </ul>
 <!-- rnb-text-end -->
 </div>
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ2hhcHRlciAwMSBvZiBEU1VSIgphdXRob3I6ICJQZXRlciBCYXVtZ2FydG5lciIKZGF0ZTogImByIFN5cy5EYXRlKClgIgpvdXRwdXQ6CiAgaHRtbF9ub3RlYm9vazoKICAgIGZpZ19jYXB0aW9uOiB5ZXMKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICBwYW5kb2NfYXJnczogLS1udW1iZXItb2Zmc2V0PTAsMAogICAgdG9jOiB5ZXMKICAgIHRvY19kZXB0aDogNAogIHdvcmRfZG9jdW1lbnQ6CiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiAnNCcKICBwZGZfZG9jdW1lbnQ6CiAgICBwYW5kb2NfYXJnczogLS1udW1iZXItb2Zmc2V0PTAsMAogICAgdG9jOiB5ZXMKICAgIHRvY19kZXB0aDogJzQnCiAgICBsYXRleF9lbmdpbmU6IHhlbGF0ZXgKICBnaXRodWJfZG9jdW1lbnQ6CiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiA0CiAgaHRtbF9kb2N1bWVudDoKICAgIGZpZ19jYXB0aW9uOiB5ZXMKICAgIGtlZXBfbWQ6IHllcwogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMKICAgIHBhbmRvY19hcmdzOiAtLW51bWJlci1vZmZzZXQ9MCwwCiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiA0Ci0tLQpgYGB7ciBsYWJlbCA9ICJnbG9iYWwtb3B0aW9ucyIsIGVjaG89RkFMU0UsIGhpZ2hsaWdodD1UUlVFfQprbml0cjo6b3B0c19jaHVuayRzZXQoCiAgICAgICAgbWVzc2FnZSA9IEYsCiAgICAgICAgZXJyb3IgPSBGLAogICAgICAgIHdhcm5pbmcgPSBGLAogICAgICAgIGNvbW1lbnQgPSBOQSwKICAgICAgICBoaWdobGlnaHQgPSBULAogICAgICAgIHByb21wdCA9IFQKICAgICAgICApCgojIyMgaW5zdGFsbCBhbmQgbG9hZCBzb21lIGltcG9ydGFudCBwYWNrYWdlcwojIyMgaHR0cHM6Ly9naXRodWIuY29tL3RpZHl2ZXJzZS90aWR5dmVyc2UKaWYgKCFyZXF1aXJlKCJ0aWR5dmVyc2UiKSkKICAgICAgICB7aW5zdGFsbC5wYWNrYWdlcygidGlkeXZlcnNlIiwgcmVwb3MgPSAnaHR0cDovL2NyYW4ud3UuYWMuYXQvJykKICAgICAgICBsaWJyYXJ5KHRpZHl2ZXJzZSl9CgojIyMgYWJvdmUgY29tbWFuZCBpbnN0YWxsZWQgYW5kIGxvYWRlZCB0aGUgY29yZSB0aWR5dmVyc2UgcGFja2FnZXM6CiMgZ2dwbG90MjogZGF0YSB2aXN1YWxpc2F0aW9uCiMgdGliYmxlOiAgYSBtb2Rlcm4gdGFrZSBvbiBkYXRhIGZyYW1lcwojIHRpZHlyOiAgIGRhdGEgdGlkeWluZwojIHJlYWRyOiAgIGRhdGEgaW1wb3J0IChjc3YsIHRzdiwgZndmKQojIHB1cnJyOiAgIGZ1bmN0aW9uYWwgUiBwcm9ncmFtbWluZwojIGRwbHlyOiAgIGRhdGEgKGZyYW1lKSBtYW5pcHVsYXRpb24KIyBzdHJpbmdyOiBzdHJpbmcgbWFuaXB1bGF0aW9uCiMgZm9yY2F0czogd29ya2luZyB3aXRoIGNhdGVnb3JpYWwgdmFyaWFsYmVzCgoKIyMjIE15IHBlcnNvbmFsIHJlbWluZGVyIGZvciBvdGhlciBpbXBvcnRhbnQgcGFja2FnZXM6CiMjIyBXb3JraW5nIHdpdGggdGltZXM6CiMgaG1zLCBmb3IgdGltZXMuCiMgbHVicmlkYXRlLCBmb3IgZGF0ZS90aW1lcy4KCiMjIyBJbXBvcnRpbmcgb3RoZXIgdHlwZXMgb2YgZGF0YToKIyBmZWF0aGVyLCBmb3Igc2hhcmluZyB3aXRoIFB5dGhvbiBhbmQgb3RoZXIgbGFuZ3VhZ2VzLgojIGhhdmVuLCBmb3IgU1BTUywgU0FTIGFuZCBTdGF0YSBmaWxlcy4KIyBodHRyLCBmb3Igd2ViIGFwaXMuCiMganNvbmxpdGUgZm9yIEpTT04uCiMgcmVhZHhsLCBmb3IgLnhscyBhbmQgLnhsc3ggZmlsZXMuCiMgcnZlc3QsIGZvciB3ZWIgc2NyYXBpbmcuCiMgeG1sMiwgZm9yIFhNTC4KCiMjIyBNb2RlbGxpbmcKIyBtb2RlbHIsIGZvciBtb2RlbGxpbmcgd2l0aGluIGEgcGlwZWxpbmUKIyBicm9vbSwgZm9yIHR1cm5pbmcgbW9kZWxzIGludG8gdGlkeSBkYXRhCmBgYAoKIyBCYXNpY3M6IE1lYXN1cmVzIG9mIGNlbnRyYWwgdGVuZGVuY3kKCiMjIEhvdyB0byBnZXQgYSBzbWFsbCBkYXRhIHNldCBpbnRvIFI/CgpOdW1iZXIgb2YgZnJpZW5kcyBvZiAxMSBGYWNlYm9vayB1c2VyOiAKMTA4LCAxMDMsIDI1MiwgMTIxLCA5MywgNTcsIDQwLCA1MywgMjIsIDExNiwgOTguCgojIyMgQXNzaWduIHZhbHVlcyB0byBhIHZlY3RvcgoKYGBge3IgYXNzaWduLXZhbHVlcy10by12ZWN0b3J9CiMgbnVtYmVyIG9mIGZhY2Vib29rIGZyaWVuZHMgPSBuZmYKbmZmIDwtIGMoMTA4LCAxMDMsIDI1MiwgMTIxLCA5MywgNTcsIDQwLCA1MywgMjIsIDExNiwgOTgpCm5mZiA8LSBzb3J0KG5mZikKbmZmCmBgYAoKIyMjIFJlYWQgZGF0YSB2YWx1ZXMgZnJvbSBrZXlib2FyZAoKQWZ0ZXIgcnVubmluZyB0aGUgZm9sbG93aW5nIGNvZGUgeW91IGhhdmUgdG8gc2V0IHlvdXIgY3Vyc28gaW50byB0aGUgY29uc29sZSBhbmQgcHJvdmlkZSB0aGUgZGF0YS4gVGhlcmUgYXJlIDIgcG9zc2liaWxpdGllczoKKiBFbnRlciB0aGUgZGF0YSBtYW51YWxseSBhbmQgc2VwYXJhdGUgZWFjaCBlbnRyeSB3aXRoIEVOVEVSCiogQ29weSBhIHN0cmluZyBvZiBkYXRhIChlLmcuIGZyb20gYSBQREYgdGFibGUpLCB3aGVyZSBlYWNoIGRhdGEgaXMgc3BlYXJhdGVkIGJ5IGEgYmxhbmsKCkluIGJvdGggY2FzZXM6IFRlcm1pbmF0ZSB0aGUgaW5wdXQgd2l0aCBhbiBleHRyYSBFTlRFUgoKYGBge3IgcmVhZC1kYXRhLWZyb20ta2V5Ym9hcmQsIGV2YWw9RkFMU0V9Cm5mZl9zY2FuIDwtIGFzLnZlY3RvcihzY2FuKGZpbGUgPSAiIikpCm5mZiA8LSBzb3J0KG5mZl9zY2FuKQpuZmZfc2NhbgpgYGAKCiMjIE1vZGUKClRoZXJlIGlzIG5vIG1vZGUtZnVuY3Rpb24gaW4gdGhlIGJhc2UgUiBtb2R1bGUuIFNlZSBodHRwczovL2JpdC5seS9SLW1vZGUuCkJ1dCB0aGVyZSBhcmUgbWFueSBwb3NzaWJpbGl0ZXMgdG8gcHJvZ3JhbW0gdGhpcyBmdW5jdGlvbi4KCkJlZm9yZSBJIHdpbGwgZGVtb25zdHJhdGUgdGhpcywgSSBuZWVkIHRvIGFkZCBhbm90aGVyIG51bWJlciBpbnRvIHRoZSBkYXRhIHNldCBpbiBvcmRlciB0byBnZXQgdGhlIGZyZXF1ZW5jZXkgb2Ygb25lIG51bWJlciBoaWdoZXIgdGhhbiB0aGUgb3RoZXJzLgoKYGBge3IgYWRkLW51bWJlci10by12ZWN0b3J9Cm5mZl9tb2RlIDwtIGMobmZmLCA1MykKYGBgCgpWYXJpYW50ZSAxOiBTaW1wbGUgYnV0IGdvb3QhCgpgYGB7ciBjb21wdXRlLW1vZGV9Ck1vZGUgPC0gZnVuY3Rpb24oeCkgewogIHV4IDwtIHVuaXF1ZSh4KQogIHV4W3doaWNoLm1heCh0YWJ1bGF0ZShtYXRjaCh4LCB1eCkpKV0KfQpNb2RlKG5mZl9tb2RlKQpgYGAKClZlcnNpb24gMjogd2l0aCBOQQoKYGBge3IgY29tcHV0ZS1tb2RlLXdpdGgtbmF9Ck1vZGUgPC0gZnVuY3Rpb24oeCwgbmEucm0gPSBGQUxTRSkgewogICAgaWYgKG5hLnJtKSB7CiAgICAgICAgeCA9IHhbIWlzLm5hKHgpXQogICAgfQogICAgdXggPC0gdW5pcXVlKHgpCiAgICB1eFt3aGljaC5tYXgodGFidWxhdGUobWF0Y2goeCwgdXgpKSldCn0KTW9kZShuZmZfbW9kZSkKYGBgCgpgYGB7ciBjb21wdXRlLW1vZGUtd2l0aC1tb2RlZXN0LXBrZ30KbGlicmFyeShtb2RlZXN0KQptbHYobmZmX21vZGUsIG1ldGhvZCA9ICJtZnYiKQpgYGAKCiMjIFRoZSBNZWRpYW4KCiMjIyBKdXN0IHRoZSBmdW5jdGlvbgoKYGBge3IgY29tcHV0ZS1tZWRpYW59Cm1lZGlhbihuZmYpCmBgYAoKIyMjIFdpdGhvdXQgb3V0bGllcgoKYGBge3IgY29tcHV0ZS1tZWRpYW4tMn0KbWVkaWFuKG5mZlsxOjEwXSkKCmBgYAoKIyMgVGhlIG1lYW4KCiMjIyBKdXN0IHRoZSBmdW5jdGlvbgpgYGB7ciBjb21wdXRlLW1lYW59Cm1lYW4obmZmKQpgYGAKCiMjIyBXaXRob3V0IG91dGxpZXIKCmBgYHtyIGNvbXB1dGUtbWVhbi0yfQptZWFuKG5mZlsxOjEwXSkKYGBgCgojIyMgV2l0aCBOQSBWYWx1ZSBub3QgcmVtb3ZlZAoKYGBge3IgY29tcHV0ZS1tZWFuLTN9Cm1lYW4obmZmW2MoMToxMCwgTkEpXSkKYGBgCgojIyMgV2l0aCBOQSBWYWx1ZSByZW1vdmVkCmBgYHtyIGNvbXB1dGUtbWVhbi00fQptZWFuKG5mZltjKDE6MTAsIE5BKV0sIG5hLnJtID0gVFJVRSkKYGBgCgojIyMgV2l0aCBvdXRsaWVyIGJ1dCB0cmltbWVkCgpgYGB7ciBjb21wdXRlLW1lYW4tNX0KbWVhbihuZmYsIHRyaW0gPSAwLjEpCm1lYW4obmZmWzI6MTBdKQpgYGAKCiMjIFRoZSByYW5nZQoKIyMjIEp1c3QgdGhlIGZ1bmN0aW9uCgpgYGB7ciBjb21wdXRlLXJhbmdlfQp4IDwtIHJhbmdlKG5mZikKeHIgPC0geFsyXSAtIHhbMV0KY2F0KCJSYW5nZToiLCB4WzJdLCAiLSIsIHhbMV0sICI9IiwgeHIpCmBgYAoKIyMjIFdpdGhvdXQgb3V0bGllcgoKCmBgYHtyIGNvbXB1dGUtcmFuZ2UtMn0KeCA8LSByYW5nZShuZmZbMToxMF0pCnhyIDwtIHhbMl0gLSB4WzFdCmNhdCgiUmFuZ2U6IiwgeFsyXSwgIi0iLCB4WzFdLCAiPSIsIHhyKQpgYGAKCiMjIFVwcGVyIGFuZCBMb3dlciBRdWFydGlsZQoKYGBge3IgY29tcHV0ZS11cHBlci1hbmQtbG93ZXItcXVhcnRpbGV9CnF1YW50aWxlKG5mZiwgdHlwZSA9IDEpCmBgYAoKCiMjIFRoZSBJbnRlcnF1YXJ0aWxlIFJhbmdlCgojIyMgSnVzdCB0aGUgZnVuY3Rpb24KCmBgYHtyIGNvbXB1dGUtSVFSfQpJUVIobmZmKQpgYGAKCiMjIyBDb21wdXRlZCB3aXRoIHR5cGUgPSAxCgpUaGlzIG1lYXN1cmUgaGFzIDkgZGlmZmVyZW50IGNhbGN1bGF0aW9uIG1ldGhvZHMgKHF1YW50aWxlIGFsZ29yaXRobXMpIHdoaWNoIHJlYWxseSBtYXR0ZXIgYmVjYXVzZSBvZiB0aGVpciBiaWcgZGlmZmVyZW5jZXMuIFN0YW5kYXJkIGlzIHR5cGUgPSA3IChyZXN1bHRzIGluIDU3KSwgd2hlcmVhcyB0eXBlID0gMSByZXN1bHRzIGluIDYzLgoKYGBge3IgY29tcHV0ZS1JUVItMn0KSVFSKG5mZiwgdHlwZSA9IDEpCmBgYAoKIyMgU2VsZi1UZXN0IHAuMjUKCmBgYHtyIHNlbGYtdGVzdC1wMjV9CnRyZWFkbWlsbCA8LSBjKDE4LDE2LDE4LDI0LDIzLDIyLDIyLDIzLDI2LDI5LDMyLDM0LDM0LDM2LDM2LDQzLDQyLDQ5LDQ2LDQ2LDU3KQpNb2RlIDwtIGZ1bmN0aW9uKHgsIG5hLnJtID0gRkFMU0UpIHsKICAgIGlmIChuYS5ybSkgewogICAgICAgIHggPSB4WyFpcy5uYSh4KV0KICAgIH0KICAgIHV4IDwtIHVuaXF1ZSh4KQogICAgdGFiIDwtIHRhYnVsYXRlKG1hdGNoKHgsIHV4KSk7IAogICAgdXhbdGFiID09IG1heCh0YWIpXQogICAgCn0KTW9kZSh0cmVhZG1pbGwpCm1lZGlhbih0cmVhZG1pbGwpCm1lYW4odHJlYWRtaWxsKQpxdWFudGlsZSh0cmVhZG1pbGwsIHR5cGUgPSA2KQpyYW5nZSh0cmVhZG1pbGwpCklRUih0cmVhZG1pbGwsIHR5cGUgPSA2KQoKYGBgCgojIyBTZWxmLVRlc3QgcC4yNwoKV2hhdCdzIHRoZSBwcm9iYWJpbGl0eSB0aGF0IHNvbWVvbmUgd28gdGhyZXcgdGhlbXNlbHZlcyBvZiBCZWFjaHkgSGVhZCB3YXMgMzAgeWVhcnMgb3Igb2xkZXI/CgoqIEZpcnN0IHdlIGNvbnZlcnQgMzAgaW50byBhIHotc2NvcmUuIFN1cHBvc2UgdGhlIG1lYW4gb2YgdGhlIHN1aWNpZGUgc2NvcmVzIHdhcyAzNiwgYW5kIHRoZSBzdGFuZGFyZCBkZXZpYXRpb24gMTM7IHRoZW4gMzAgd2lsbCBiZWtvbW1lICgzMC0zNikvMTMgPSBgciBuIDwtICgzMC0zNikvMTM7IG5gLgoqIFdlIHRoZW4gbG9vayB1cCB0aGlzIHZhbHVlIGluIHRoZSBjb2x1bW4gbGFiZWxsZWQgIkJpZ2dlciBQb3J0aW9uIiAoaS5lLiwgdGhlIGFyZWEgYWJvdmUgdGhlIHZhbHVlIGByIG5gKS4KKiBJIGdldCB0aGUgdmFsdWUgb2YgMzIuMjglLCBvciBwdXQgYW5vdGhlciB3YXksIHRoZXJlIGlzIGEgY2hhbmNlIG9mIDMyLjI4JSB0aGF0IGEgc3VpY2lkZSB2aWN0aW0gd2FzIGFnZWQgMzAgb3IgbGVzcy4gV2UgY2FuIGFsc28gc2F5IHRoYXQgdGhlcmUgaXMgYSA2Ny43MiUgY2hhbmNlIHRoYXQgYSBzdWljaWRlIHZpY3RpbSB3YSBvbGRlciB0aGFuIDMwLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQ2hhcHRlciAwMSBvZiBEU1VSIgphdXRob3I6ICJQZXRlciBCYXVtZ2FydG5lciIKZGF0ZTogImByIFN5cy5EYXRlKClgIgpvdXRwdXQ6CiAgcGRmX2RvY3VtZW50OgogICAgcGFuZG9jX2FyZ3M6IC0tbnVtYmVyLW9mZnNldD0wLDAKICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6ICc0JwogICAgbGF0ZXhfZW5naW5lOiB4ZWxhdGV4CiAgd29yZF9kb2N1bWVudDoKICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6ICc0JwogIGh0bWxfbm90ZWJvb2s6CiAgICBmaWdfY2FwdGlvbjogeWVzCiAgICBudW1iZXJfc2VjdGlvbnM6IHllcwogICAgcGFuZG9jX2FyZ3M6IC0tbnVtYmVyLW9mZnNldD0wLDAKICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDQKICBnaXRodWJfZG9jdW1lbnQ6CiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiA0CiAgaHRtbF9kb2N1bWVudDoKICAgIGZpZ19jYXB0aW9uOiB5ZXMKICAgIGtlZXBfbWQ6IHllcwogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMKICAgIHBhbmRvY19hcmdzOiAtLW51bWJlci1vZmZzZXQ9MCwwCiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiA0Ci0tLQpgYGB7ciBsYWJlbCA9ICJnbG9iYWwtb3B0aW9ucyIsIGVjaG89RkFMU0UsIGhpZ2hsaWdodD1UUlVFfQprbml0cjo6b3B0c19jaHVuayRzZXQoCiAgICAgICAgbWVzc2FnZSA9IEYsCiAgICAgICAgZXJyb3IgPSBGLAogICAgICAgIHdhcm5pbmcgPSBGLAogICAgICAgIGNvbW1lbnQgPSBOQSwKICAgICAgICBoaWdobGlnaHQgPSBULAogICAgICAgIHByb21wdCA9IFQKICAgICAgICApCgpgYGAKCiMgQmFzaWNzOiBNZWFzdXJlcyBvZiBDZW50cmFsIFRlbmRlbmN5CgojIyBIb3cgdG8gZ2V0IGEgc21hbGwgZGF0YSBzZXQgaW50byBSPwoKTnVtYmVyIG9mIGZyaWVuZHMgb2YgMTEgRmFjZWJvb2sgdXNlcjogCjEwOCwgMTAzLCAyNTIsIDEyMSwgOTMsIDU3LCA0MCwgNTMsIDIyLCAxMTYsIDk4LgoKIyMjIEFzc2lnbiB2YWx1ZXMgdG8gYSB2ZWN0b3IKCmBgYHtyIGFzc2lnbi12YWx1ZXMtdG8tdmVjdG9yfQojIG51bWJlciBvZiBmYWNlYm9vayBmcmllbmRzID0gbmZmCm5mZiA8LSBjKDEwOCwgMTAzLCAyNTIsIDEyMSwgOTMsIDU3LCA0MCwgNTMsIDIyLCAxMTYsIDk4KQpuZmYgPC0gc29ydChuZmYpCm5mZgpgYGAKCiMjIyBSZWFkIGRhdGEgdmFsdWVzIGZyb20ga2V5Ym9hcmQKCkFmdGVyIHJ1bm5pbmcgdGhlIGZvbGxvd2luZyBjb2RlIHlvdSBoYXZlIHRvIHNldCB5b3VyIGN1cnNvciBpbnRvIHRoZSBjb25zb2xlIGFuZCBwcm92aWRlIHRoZSBkYXRhLiBUaGVyZSBhcmUgMiBwb3NzaWJpbGl0aWVzOgoqIEVudGVyIHRoZSBkYXRhIG1hbnVhbGx5IGFuZCBzZXBhcmF0ZSBlYWNoIGVudHJ5IHdpdGggPkVOVEVSPAoqIENvcHkgYSBzdHJpbmcgb2YgZGF0YSAoZS5nLiBmcm9tIGEgUERGIHRhYmxlKSwgd2hlcmUgZWFjaCBkYXRhIGlzIHNwZWFyYXRlZCBieSBhIGJsYW5rCgpJbiBib3RoIGNhc2VzOiBUZXJtaW5hdGUgdGhlIGlucHV0IHdpdGggYW4gZXh0cmEgPkVOVEVSPAoKYGBge3IgcmVhZC1kYXRhLWZyb20ta2V5Ym9hcmQsIGV2YWw9RkFMU0V9Cm5mZl9zY2FuIDwtIGFzLnZlY3RvcihzY2FuKGZpbGUgPSAiIikpCm5mZiA8LSBzb3J0KG5mZl9zY2FuKQpuZmZfc2NhbgpgYGAKCiMjIFRoZSBNb2RlCgpUaGVyZSBpcyBubyBtb2RlLWZ1bmN0aW9uIGluIHRoZSBiYXNlIFIgbW9kdWxlLiBTZWUgaHR0cHM6Ly9iaXQubHkvUi1tb2RlLgpCdXQgdGhlcmUgYXJlIG1hbnkgcG9zc2liaWxpdGVzIHRvIHByb2dyYW1tIHRoaXMgZnVuY3Rpb24uCgpCZWZvcmUgSSB3aWxsIGRlbW9uc3RyYXRlIHRoaXMsIEkgbmVlZCB0byBhZGQgYW5vdGhlciBudW1iZXIgaW50byB0aGUgZGF0YSBzZXQgaW4gb3JkZXIgdG8gZ2V0IHRoZSBmcmVxdWVuY2V5IG9mIG9uZSBudW1iZXIgaGlnaGVyIHRoYW4gdGhlIG90aGVycy4KCmBgYHtyIGFkZC1udW1iZXItdG8tdmVjdG9yfQpuZmZfbW9kZSA8LSBjKG5mZiwgNTMpCmBgYAoKIyMjIFZhcmlhbnRlIDE6IFNpbXBsZSBidXQgZ29vZCEKCmBgYHtyIGNvbXB1dGUtbW9kZX0KTW9kZSA8LSBmdW5jdGlvbih4KSB7CiAgdXggPC0gdW5pcXVlKHgpCiAgdXhbd2hpY2gubWF4KHRhYnVsYXRlKG1hdGNoKHgsIHV4KSkpXQp9Ck1vZGUobmZmX21vZGUpCmBgYAoKIyMjIFZlcnNpb24gMjogd2l0aCBOQQoKYGBge3IgY29tcHV0ZS1tb2RlLXdpdGgtbmF9Ck1vZGUgPC0gZnVuY3Rpb24oeCwgbmEucm0gPSBGQUxTRSkgewogICAgaWYgKG5hLnJtKSB7CiAgICAgICAgeCA9IHhbIWlzLm5hKHgpXQogICAgfQogICAgdXggPC0gdW5pcXVlKHgpCiAgICB1eFt3aGljaC5tYXgodGFidWxhdGUobWF0Y2goeCwgdXgpKSldCn0KTW9kZShuZmZfbW9kZSkKYGBgCgojIyMgVmVyc2lvbiAzOiB3aXRoIHBhY2thZ2UgYG1vZGVlc3RgCgpgYGB7ciBjb21wdXRlLW1vZGUtd2l0aC1tb2RlZXN0LXBrZ30KbGlicmFyeShtb2RlZXN0KQptbHYobmZmX21vZGUsIG1ldGhvZCA9ICJtZnYiKQpgYGAKCiMjIFRoZSBNZWRpYW4KCiMjIyBKdXN0IHRoZSBmdW5jdGlvbgoKYGBge3IgY29tcHV0ZS1tZWRpYW59Cm1lZGlhbihuZmYpCmBgYAoKCgoKIyMjIFdpdGhvdXQgb3V0bGllcgoKYGBge3IgY29tcHV0ZS1tZWRpYW4tMn0KbWVkaWFuKG5mZlsxOjEwXSkKCmBgYAoKIyMgVGhlIE1lYW4KCiMjIyBKdXN0IHRoZSBmdW5jdGlvbgpgYGB7ciBjb21wdXRlLW1lYW59Cm1lYW4obmZmKQpgYGAKCiMjIyBXaXRob3V0IG91dGxpZXIKCmBgYHtyIGNvbXB1dGUtbWVhbi0yfQptZWFuKG5mZlsxOjEwXSkKYGBgCgojIyMgV2l0aCBOQSBWYWx1ZSBub3QgcmVtb3ZlZAoKYGBge3IgY29tcHV0ZS1tZWFuLTN9Cm1lYW4obmZmW2MoMToxMCwgTkEpXSkKYGBgCgojIyMgV2l0aCBOQSBWYWx1ZSByZW1vdmVkCmBgYHtyIGNvbXB1dGUtbWVhbi00fQptZWFuKG5mZltjKDE6MTAsIE5BKV0sIG5hLnJtID0gVFJVRSkKYGBgCgojIyMgV2l0aCBvdXRsaWVyIGJ1dCB0cmltbWVkCgpgYGB7ciBjb21wdXRlLW1lYW4tNX0KbWVhbihuZmYsIHRyaW0gPSAwLjEpCm1lYW4obmZmWzI6MTBdKQpgYGAKCiMjIFRoZSBSYW5nZQoKIyMjIEp1c3QgdGhlIGZ1bmN0aW9uCgpgYGB7ciBjb21wdXRlLXJhbmdlfQp4IDwtIHJhbmdlKG5mZikKeHIgPC0geFsyXSAtIHhbMV0KY2F0KCJSYW5nZToiLCB4WzJdLCAiLSIsIHhbMV0sICI9IiwgeHIpCmBgYAoKIyMjIFdpdGhvdXQgb3V0bGllcgoKCmBgYHtyIGNvbXB1dGUtcmFuZ2UtMn0KeCA8LSByYW5nZShuZmZbMToxMF0pCnhyIDwtIHhbMl0gLSB4WzFdCmNhdCgiUmFuZ2U6IiwgeFsyXSwgIi0iLCB4WzFdLCAiPSIsIHhyKQpgYGAKCiMjIFVwcGVyIGFuZCBMb3dlciBRdWFydGlsZQoKYGBge3IgY29tcHV0ZS11cHBlci1hbmQtbG93ZXItcXVhcnRpbGV9CnF1YW50aWxlKG5mZiwgdHlwZSA9IDEpCmBgYAoKCiMjIFRoZSBJbnRlcnF1YXJ0aWxlIFJhbmdlCgojIyMgSnVzdCB0aGUgZnVuY3Rpb24KCmBgYHtyIGNvbXB1dGUtSVFSfQpJUVIobmZmKQpgYGAKCiMjIyBDb21wdXRlZCB3aXRoIHR5cGUgPSAxCgpUaGlzIG1lYXN1cmUgaGFzIDkgZGlmZmVyZW50IGNhbGN1bGF0aW9uIG1ldGhvZHMgKHF1YW50aWxlIGFsZ29yaXRobXMpIHdoaWNoIHJlYWxseSBtYXR0ZXIgYmVjYXVzZSBvZiB0aGVpciBiaWcgZGlmZmVyZW5jZXMuIFN0YW5kYXJkIGlzIHR5cGUgPSA3IChyZXN1bHRzIGluIDU3KSwgd2hlcmVhcyB0eXBlID0gMSByZXN1bHRzIGluIDYzLgoKYGBge3IgY29tcHV0ZS1JUVItMn0KSVFSKG5mZiwgdHlwZSA9IDEpCmBgYAoKIyMgU2VsZi1UZXN0cwoKIyMjIFNlbGYtdGVzdCBwLjI1CgpgYGB7ciBzZWxmLXRlc3QtcDI1fQp0cmVhZG1pbGwgPC0gYygxOCwxNiwxOCwyNCwyMywyMiwyMiwyMywyNiwyOSwzMiwzNCwzNCwzNiwzNiw0Myw0Miw0OSw0Niw0Niw1NykKTW9kZSA8LSBmdW5jdGlvbih4LCBuYS5ybSA9IEZBTFNFKSB7CiAgICBpZiAobmEucm0pIHsKICAgICAgICB4ID0geFshaXMubmEoeCldCiAgICB9CiAgICB1eCA8LSB1bmlxdWUoeCkKICAgIHRhYiA8LSB0YWJ1bGF0ZShtYXRjaCh4LCB1eCkpOyAKICAgIHV4W3RhYiA9PSBtYXgodGFiKV0KICAgIAp9Ck1vZGUodHJlYWRtaWxsKQptZWRpYW4odHJlYWRtaWxsKQptZWFuKHRyZWFkbWlsbCkKcXVhbnRpbGUodHJlYWRtaWxsLCB0eXBlID0gNikKcmFuZ2UodHJlYWRtaWxsKQpJUVIodHJlYWRtaWxsLCB0eXBlID0gNikKCmBgYAoKIyMjIFNlbGYtVGVzdCBwLjI3CgpXaGF0J3MgdGhlIHByb2JhYmlsaXR5IHRoYXQgc29tZW9uZSB3aG8gdGhyZXcgdGhlbXNlbHZlcyBvZiBCZWFjaHkgSGVhZCB3YXMgMzAgeWVhcnMgb3Igb2xkZXI/CgoqIEZpcnN0IHdlIGNvbnZlcnQgMzAgaW50byBhIHotc2NvcmUuIFN1cHBvc2UgdGhlIG1lYW4gb2YgdGhlIHN1aWNpZGUgc2NvcmVzIHdhcyAzNiwgYW5kIHRoZSBzdGFuZGFyZCBkZXZpYXRpb24gMTM7IHRoZW4gMzAgd2lsbCBiZWtvbW1lICgzMC0zNikvMTMgPSBgciBuIDwtICgzMC0zNikvMTM7IG5gLgoqIFdlIHRoZW4gbG9vayB1cCB0aGlzIHZhbHVlIGluIHRoZSBjb2x1bW4gbGFiZWxsZWQgIkJpZ2dlciBQb3J0aW9uIiAoaS5lLiwgdGhlIGFyZWEgYWJvdmUgdGhlIHZhbHVlIGByIG5gKS4KKiBJIGdldCB0aGUgdmFsdWUgb2YgMzIuMjglLCBvciBwdXQgYW5vdGhlciB3YXksIHRoZXJlIGlzIGEgY2hhbmNlIG9mIDMyLjI4JSB0aGF0IGEgc3VpY2lkZSB2aWN0aW0gd2FzIGFnZWQgMzAgb3IgbGVzcy4gV2UgY2FuIGFsc28gc2F5IHRoYXQgdGhlcmUgaXMgYSA2Ny43MiUgY2hhbmNlIHRoYXQgYSBzdWljaWRlIHZpY3RpbSB3YXMgb2xkZXIgdGhhbiAzMC4K</div>
 
 
 

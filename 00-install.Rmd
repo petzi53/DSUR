@@ -38,44 +38,15 @@ knitr::opts_chunk$set(
         prompt = T
         )
 
-### install and load some important packages
-### https://github.com/tidyverse/tidyverse
-if (!require("tidyverse"))
-        {install.packages("tidyverse", repos = 'http://cran.wu.ac.at/')
-        library(tidyverse)}
-
-### above command installed and loaded the core tidyverse packages:
-# ggplot2: data visualisation
-# tibble:  a modern take on data frames
-# tidyr:   data tidying
-# readr:   data import (csv, tsv, fwf)
-# purrr:   functional R programming
-# dplyr:   data (frame) manipulation
-# stringr: string manipulation
-# forcats: working with categorial varialbes
-
-
-### My personal reminder for other important packages:
-### Working with times:
-# hms, for times.
-# lubridate, for date/times.
-
-### Importing other types of data:
-# feather, for sharing with Python and other languages.
-# haven, for SPSS, SAS and Stata files.
-# httr, for web apis.
-# jsonlite for JSON.
-# readxl, for .xls and .xlsx files.
-# rvest, for web scraping.
-# xml2, for XML.
-
-### Modelling
-# modelr, for modelling within a pipeline
-# broom, for turning models into tidy data
 ```
 
 ```{r install-DSUR-packages, eval=FALSE}
-library(devtools)
-install_github("Frostarella/DSUR.noof")
+if (!require("devtools"))
+        {install.packages("devtools", repos = 'http://cran.wu.ac.at/')
+        library(devtools)}
+
+if (!require("Frostarella/DSUR.noof"))
+        {install_github("Frostarella/DSUR.noof")
+        library(DSUR.noof)}
 ```
 
