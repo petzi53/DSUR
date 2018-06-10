@@ -4,6 +4,7 @@ author: "Peter Baumgartner"
 date: "`r Sys.Date()`"
 output: 
     learnr::tutorial:
+        version: 0.1
         progressive: true
         allow_skip: true
 runtime: shiny_prerendered
@@ -14,56 +15,335 @@ library(learnr)
 library(checkr)
 knitr::opts_chunk$set(echo = FALSE)
 tutorial_options(exercise.checker = checkr::check_for_learnr)
-assign("my_points", 0, envir = .GlobalEnv)
+# assign("my_points", 0, envir = .GlobalEnv)
 ```
 
 # DSUR: Chapter 01
 
-## Quiz
+<!-- ## Quiz -->
 
-### Question 01
+<!-- ### Question 01 -->
 
-```{r v14-quiz-chapter-01-01}
+<!-- ```{r quiz-chapter-01-01} -->
+<!--   question("What is a confounding variable?", -->
+<!--     answer("A variable that is manipulated by the experimenter."), -->
+<!--     answer("A variable that affects the outcome being measured as well as or instead of the independent variable.", correct = TRUE), -->
+<!--     answer("A variable that has not been measured."), -->
+<!--     answer("A variable that is made up only of categories."), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- ### Question 02 -->
+
+
+<!-- ```{r quiz-chapter-01-02} -->
+<!-- question("'Children can learn a second language faster before the age of 7'. Is this statement:", -->
+<!--     answer("A null hypothesis"), -->
+<!--     answer("A non‐scientific statement."), -->
+<!--     answer("A two‐tailed hypothesis."), -->
+<!--     answer("A one‐tailed hypothesis.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- ### Question 03 -->
+
+<!-- ```{r quiz-chapter-01-03} -->
+<!-- question("If a psychological test is valid, what does this mean?", -->
+<!--     answer("The test will give consistent results."), -->
+<!--     answer("The test measures what it claims to measure.", correct = TRUE), -->
+<!--     answer("The test has internal consistency."), -->
+<!--     answer("The test measures a psychologically useful variable."), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 04 -->
+
+<!-- ```{r quiz-chapter-01-04} -->
+<!-- question("If my null hypothesis is ‘Dutch people do not differ from English people in height’, what is my alternative hypothesis?", -->
+<!--     answer("Dutch people are taller than English people."), -->
+<!--     answer("English people are taller than Dutch people."), -->
+<!--     answer("Dutch people differ in height from English people."), -->
+<!--     answer("All of the above are plausible alternative hypotheses.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 05 -->
+
+<!-- ```{r quiz-chapter-01-05} -->
+<!-- question("When questionnaire scores predict, or correspond with, external measures of the same construct that the questionnaire measures it is said to have:", -->
+<!--     answer("Ecological validity."), -->
+<!--     answer("Factorial validity."), -->
+<!--     answer("Content validity."), -->
+<!--     answer("Criterion validity.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 06 -->
+
+<!-- ```{r quiz-chapter-01-06} -->
+<!-- question("A variable manipulated by a researcher is known as:", -->
+<!--     answer("A dependent variable."), -->
+<!--     answer("A confounding variable."), -->
+<!--     answer("A discrete variable."), -->
+<!--     answer("An independent variable.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 07 -->
+
+<!-- ```{r quiz-chapter-01-07} -->
+<!-- question("A predictor variable is another name for:", -->
+<!--     answer("A dependent variable."), -->
+<!--     answer("A confounding variable."), -->
+<!--     answer("A discrete variable."), -->
+<!--     answer("An independent variable.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 08 -->
+
+<!-- ```{r quiz-chapter-01-08} -->
+<!-- question("What kind of variable is IQ, measured by a standard IQ test?", -->
+<!--     answer("Categorical."), -->
+<!--     answer("Discrete."), -->
+<!--     answer("Nominal."), -->
+<!--     answer("Continuous.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 09 -->
+
+<!-- ```{r quiz-chapter-01-09} -->
+<!-- question("A frequency distribution in which high scores are most frequent (i.e. bars on the graph are highest on the right‐hand side) is said to be:", -->
+<!--     answer("Positively skewed."), -->
+<!--     answer("Leptokurtic."), -->
+<!--     answer("Platykurtic."), -->
+<!--     answer("Negatively skewed.", correct = TRUE), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 10 -->
+
+<!-- ```{r quiz-chapter-01-10} -->
+<!-- question("A frequency distribution in which there are too few scores at the extremes of the distribution is said to be:", -->
+<!--     answer("Positively skewed."), -->
+<!--     answer("Leptokurtic.", correct = TRUE), -->
+<!--     answer("Platykurtic."), -->
+<!--     answer("Negatively skewed."), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 11 -->
+
+<!-- ```{r quiz-chapter-01-11} -->
+<!-- question("Which of the following is designed to compensate for practice effects?", -->
+<!--     answer("A repeated measures design."), -->
+<!--     answer("Randomization of participants."), -->
+<!--     answer("Counterbalancing.", correct = TRUE), -->
+<!--     answer("A control condition."), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 12 -->
+
+<!-- ```{r quiz-chapter-01-12} -->
+<!-- question("Variation due to variables that have not been measured is known as:", -->
+<!--     answer("Unsystematic variance.", correct = TRUE), -->
+<!--     answer("Homogeneous variance."), -->
+<!--     answer("Systematic variance."), -->
+<!--     answer("Model variance."), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ### Question 13 -->
+
+<!-- ```{r quiz-chapter-01-13} -->
+<!-- question("If the scores on a test have a mean of 26 and a standard deviation of 4, what is the z‐score for a score of 18?", -->
+<!--     answer("-2", correct = TRUE), -->
+<!--     answer("11"), -->
+<!--     answer("2"), -->
+<!--     answer("-1.41"), -->
+<!--     random_answer_order = TRUE, -->
+<!--     correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."), -->
+<!--     incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.") -->
+<!-- ) -->
+<!-- ``` -->
+
+## Second Quiz
+
+### 13 Questions
+
+
+```{r quiz-chapter-01}
+my_good_answers <- 0
+my_bad_answers <- 0
+
+quiz(caption = "Quiz Chapter 01",
   question("What is a confounding variable?",
     answer("A variable that is manipulated by the experimenter."),
     answer("A variable that affects the outcome being measured as well as or instead of the independent variable.", correct = TRUE),
     answer("A variable that has not been measured."),
     answer("A variable that is made up only of categories."),
     random_answer_order = TRUE,
-    correct = paste("Correct: You've reached", assign("my_points", my_points + 1, envir = .GlobalEnv), " of 13 possible points."),
-    incorrect = paste("Incorrect: You've reached", assign("my_points", my_points - 1, envir = .GlobalEnv), " of 13 possible points.")
-  )
-```
-
-### Question 02
-
-
-```{r quiz-chapter-01-02}
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+  ),
+  
 question("'Children can learn a second language faster before the age of 7'. Is this statement:",
     answer("A null hypothesis"),
     answer("A non‐scientific statement."),
     answer("A two‐tailed hypothesis."),
-    answer("A one‐tailed hypothesis.", correct = TRUE)
-  )
-```
-
-### Another quiz
-
-```{r quiz1, echo=FALSE}
-quiz(caption = "Quiz 1",
-  question("What number is the letter A in the *English* alphabet?",
-    answer("8"),
-    answer("14"),
-    answer("1", correct = TRUE),
-    answer("23")
+    answer("A one‐tailed hypothesis.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
   ),
-  question("Where are you right now? (select ALL that apply)",
-    answer("Planet Earth", correct = TRUE),
-    answer("Pluto"),
-    answer("At a computing device", correct = TRUE),
-    answer("In the Milky Way", correct = TRUE),
-    incorrect = "Incorrect. You're on Earth, in the Milky Way, at a computer."
-  )
+
+question("If a psychological test is valid, what does this mean?",
+    answer("The test will give consistent results."),
+    answer("The test measures what it claims to measure.", correct = TRUE),
+    answer("The test has internal consistency."),
+    answer("The test measures a psychologically useful variable."),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("If my null hypothesis is ‘Dutch people do not differ from English people in height’, what is my alternative hypothesis?",
+    answer("Dutch people are taller than English people."),
+    answer("English people are taller than Dutch people."),
+    answer("Dutch people differ in height from English people."),
+    answer("All of the above are plausible alternative hypotheses.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("When questionnaire scores predict, or correspond with, external measures of the same construct that the questionnaire measures it is said to have:",
+    answer("Ecological validity."),
+    answer("Factorial validity."),
+    answer("Content validity."),
+    answer("Criterion validity.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("A variable manipulated by a researcher is known as:",
+    answer("A dependent variable."),
+    answer("A confounding variable."),
+    answer("A discrete variable."),
+    answer("An independent variable.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("A predictor variable is another name for:",
+    answer("A dependent variable."),
+    answer("A confounding variable."),
+    answer("A discrete variable."),
+    answer("An independent variable.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("What kind of variable is IQ, measured by a standard IQ test?",
+    answer("Categorical."),
+    answer("Discrete."),
+    answer("Nominal."),
+    answer("Continuous.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("A frequency distribution in which high scores are most frequent (i.e. bars on the graph are highest on the right‐hand side) is said to be:",
+    answer("Positively skewed."),
+    answer("Leptokurtic."),
+    answer("Platykurtic."),
+    answer("Negatively skewed.", correct = TRUE),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("A frequency distribution in which there are too few scores at the extremes of the distribution is said to be:",
+    answer("Positively skewed."),
+    answer("Leptokurtic.", correct = TRUE),
+    answer("Platykurtic."),
+    answer("Negatively skewed."),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("Which of the following is designed to compensate for practice effects?",
+    answer("A repeated measures design."),
+    answer("Randomization of participants."),
+    answer("Counterbalancing.", correct = TRUE),
+    answer("A control condition."),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("Variation due to variables that have not been measured is known as:",
+    answer("Unsystematic variance.", correct = TRUE),
+    answer("Homogeneous variance."),
+    answer("Systematic variance."),
+    answer("Model variance."),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+),
+
+question("If the scores on a test have a mean of 26 and a standard deviation of 4, what is the z‐score for a score of 18?",
+    answer("-2", correct = TRUE),
+    answer("11"),
+    answer("2"),
+    answer("-1.41"),
+    random_answer_order = TRUE,
+    correct = paste("Correct: You've reached", my_good_answers <- my_good_answers + 1, " of 13 possible points."),
+    incorrect = paste("Incorrect: You've reached", my_bad_answers <- my_bad_answers + 1, " of 13 possible points.")
+    )
 )
 ```
 
