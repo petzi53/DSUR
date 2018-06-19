@@ -1,0 +1,12 @@
+name: DSURT
+title: DSURT
+username:
+account: petzi53
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 362246
+bundleId: 1434102
+url: https://petzi53.shinyapps.io/DSURT/
+when: 1529267488.42832
+asMultiple: FALSE
+asStatic: FALSE

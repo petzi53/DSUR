@@ -1,0 +1,126 @@
+---
+title: "DSUR Tutorial"
+author: "Peter Baumgartner"
+date: "`r Sys.Date()`"
+output: 
+    learnr::tutorial:
+        progressive: true
+        allow_skip: true
+        theme: cerulean
+runtime: shiny_prerendered
+---
+
+
+```{r setup, include=FALSE}
+library(learnr)
+library(checkr)
+tutorial_options(exercise.checker = checkr::check_for_learnr)
+knitr::opts_chunk$set(
+        message = T,
+        error = T,
+        warning = T,
+        comment = '##',
+        highlight = T,
+        prompt = F,
+        echo = F
+        )
+
+```
+
+```{r}
+# this chunk (or line) is necessary,
+# because there is at the moment no interactive exercise
+# without this chunk (or line) learnr generates the following error:
+# "Warning: Error in download$filter: attempt to apply non-function
+#   [No stack trace available]"
+learnr::initialize_tutorial()
+```
+
+
+
+# Introduction
+
+## Material and subjects covered
+
+This tutorial is supplementary material for [Discovering statistics using R](https://studysites.uk.sagepub.com/dsur/main.htm) by Field, A. P., Miles, J., and Field, Z. C. (2012, London: Sage). In this tutorial I provide some interactive exercises and quizzes to learn statistics **and** R. 
+
+I used 'and' instead of 'with' or 'using' as most of the interactive exercises aks to apply R code for a given statistical procedure. So learning R is more prominent as in the mentioned book, whereas the statistical content relies heavily on the explanations given in `Discovering statistics using R` (abbreviated with `DSUR`). To benefit most of this course material you definitively have to buy a copy of DSUR.
+
+
+<center>
+
+[
+![Field, A., Miles, J., & Field, Z. (2012). Discovering Statistics Using R (1st ed.). SAGE Publications Ltd.
+](https://images-na.ssl-images-amazon.com/images/I/41M2PgYiZXL._SX366_BO1,204,203,200_.jpg)](https://studysites.uk.sagepub.com/dsur/main.htm)
+
+</center>
+
+## Table of contents
+
+00-Chapter: Introduction (this file)   
+[01-Chapter](https://pbaumgartner.shinyapps.io/DSURT-01/): Some basic concepts and measures   
+02-Chapter: A gentle introduction into statistics   
+03-Chapter: The R and RStudio environment   
+04-Chapter: Exploring data with graphs   
+05-Chapter: Exploring assumptions   
+06-Chapter: Correlation   
+07-Chapter: Regression   
+08-Chapter: Logistic Regression   
+09-Chapter: Comparing two means   
+10-Chapter: Comparing several means: ANOVA (GLM 1)  
+11-Chapter: Analysis of covariance: ANCOVA (GLM 2)    
+12-Chapter: Factorial ANOVA (GLM 3)  
+13-Chapter: Repeated-measures design (GLM 4)   
+14-Chapter: Mixed designs (GLM 5)   
+15-Chapter: Non-parametric tests   
+16-Chapter: Multivariate analysis of variance (MANOVA)   
+17-Chapter: Exploratory factor analysis   
+18-Chapter: Categorial data   
+19-Chapter: Multilevel linear models 
+
+## Target group and prerequisite 
+
+This interactive tutorial is primarily intended for people who work through DSUR and want to have more interactive exercises using R. I assume the same level of background knowledge as in DSUR, namely nothing:
+
+"_In essence, I assume you know nothing about statistics, but I do assume you have some very basic grasp of computers … and math._" (DSUR, p.XXV)
+
+## Learning outcomes
+
+The following learning outcomes provide information at the course level. As there are different levels in a curriculum (course, module/chapter lesson/section etc.) with their own learning outcomes only 3-5 learning outcomes on each level is sufficent. In formulating the following outcomes I am applying the taxonomy by Anderson & Krathwohl (2001, 2002) which is an extended and revised edition of the original taxonomy by Bloom (1956).
+
+Having successfully completed this interactive course you will be able to:
+
++ manipulate and transform data with R to bring them in a format suitable for exploratory data analysis
++ create high quality data visualizations with the R package ggplot2
++ implementing of statistical procedures within the R environment
++ programming an analysis with R in such a way that the script can be used with minimal effort for similar datasets and analyses
+
+**References:**
+
++ Anderson, L. W. (2002). Revising Bloom’s taxonomy. Columbus, OH: Ohio State University.
++ Anderson, L. W., & Krathwohl, D. R. (2001). A taxonomy for learning, teaching, and assessing: a revision of Bloom’s taxonomy of educational objectives. New York: Longman.
++ Bloom, B. S., & Krathwohl, D. R. (1956). Taxonomy of Educational Objectives Book 1: Cognitive Domain (2nd ed.). Longman.
+
+
+## Structure of this tutorial {#structure}
+
+I tried to follow as exactly as possible the structure of DSUR. But sometimes I had to develop other sequeneces. This is esepcially true for the first two chapters as DSUR starts with explaining R in the third chapter. To provide for the R newbies some meaningful exercises even for the first two chapters I had to antedate some content (e.g. how to install R, to explain the elements of the graphical user interface `GUI` etc.
+
+Sometimes I added R related information or even decided to depart from DSUR content. The last is especially true with `RStudio` which installation and GIUs I used instead of the standard R Interface or the program package `R Commander`. But I have noted this differences within a yellow box.
+
+<div class="alert alert-warning" role="alert">
+  In yellow boxes I will mention differences to the accompanying source of DSUR. 
+</div>
+
+## How to use this tutorial?
+
+[Here I will explain the different display modes and required actions]
+
+## Learning Outcome {#learning-outcome}
+
+## Tools used and source code
+
+This interactive course is written in R Markdown and uses the [`learnr`](https://rstudio.github.io/learnr/) package in combination with the [`checkr`](https://github.com/dtkaplan/checkr). The source code can be inspected at [my GitHub account](https://github.com/petzi53/DSUR). 
+
+I have written this tutorial to rebuild my own competences in statistics and at the same time to improve my R practice. As I am not an expert on both subject please help to improve this tutorial via PRs or [contact me](mailto:peter_baumgartner@me.com) for errors or other improvements.
+

@@ -1,0 +1,13 @@
+name: DSURT-01
+title:
+username:
+account: pbaumgartner
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 362262
+bundleId: 1434193
+url: https://pbaumgartner.shinyapps.io/DSURT-01/
+when: 1529273967.85246
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: css/my-css.css|www/check_test.R

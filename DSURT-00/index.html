@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="Peter Baumgartner" />
+
+<meta name="date" content="2018-06-18" />
+
+<meta name="progressive" content="true" />
+<meta name="allow-skip" content="true" />
+
+<title>DSUR Tutorial</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-introduction" class="section level1">
+<h1>Introduction</h1>
+<div id="section-material-and-subjects-covered" class="section level2">
+<h2>Material and subjects covered</h2>
+<p>This tutorial is supplementary material for <a href="https://studysites.uk.sagepub.com/dsur/main.htm">Discovering statistics using R</a> by Field, A. P., Miles, J., and Field, Z. C. (2012, London: Sage). In this tutorial I provide some interactive exercises and quizzes to learn statistics <strong>and</strong> R.</p>
+<p>I used ‘and’ instead of ‘with’ or ‘using’ as most of the interactive exercises aks to apply R code for a given statistical procedure. So learning R is more prominent as in the mentioned book, whereas the statistical content relies heavily on the explanations given in <code>Discovering statistics using R</code> (abbreviated with <code>DSUR</code>). To benefit most of this course material you definitively have to buy a copy of DSUR.</p>
+<center>
+<p><a href="https://studysites.uk.sagepub.com/dsur/main.htm"><img src="https://images-na.ssl-images-amazon.com/images/I/41M2PgYiZXL._SX366_BO1,204,203,200_.jpg" alt="Field, A., Miles, J., &amp; Field, Z. (2012). Discovering Statistics Using R (1st ed.). SAGE Publications Ltd." /></a></p>
+</center>
+</div>
+<div id="section-table-of-contents" class="section level2">
+<h2>Table of contents</h2>
+<p>This is another trial with <code>Run Document</code>. <!--
+This is a comment
+with a second line
+--></p>
+<p><strong>Without explicit header id</strong></p>
+<p><a href="#section-learning-outcomes">Go to SECTION Learning Outcomes</a></p>
+<p><a href="#learning-outcomes">Go to Learning Outcomes</a></p>
+<p><strong>With explicit header id</strong></p>
+<p><a href="#section-learning-outcome">Go to SECTION Learning Outcome</a></p>
+<p><a href="#learning-outcome">Go to Learning Outcomes with explicit header id</a></p>
+<hr />
+<p>00-Chapter: Introduction (this file)<br />
+<a href="https://pbaumgartner.shinyapps.io/DSURT-01/">01-Chapter</a>: Some basic concepts and measures<br />
+02-Chapter: A gentle introduction into statistics<br />
+03-Chapter: The R and RStudio environment<br />
+04-Chapter: Exploring data with graphs<br />
+05-Chapter: Exploring assumptions<br />
+06-Chapter: Correlation<br />
+07-Chapter: Regression<br />
+08-Chapter: Logistic Regression<br />
+09-Chapter: Comparing two means<br />
+10-Chapter: Comparing several means: ANOVA (GLM 1)<br />
+11-Chapter: Analysis of covariance: ANCOVA (GLM 2)<br />
+12-Chapter: Factorial ANOVA (GLM 3)<br />
+13-Chapter: Repeated-measures design (GLM 4)<br />
+14-Chapter: Mixed designs (GLM 5)<br />
+15-Chapter: Non-parametric tests<br />
+16-Chapter: Multivariate analysis of variance (MANOVA)<br />
+17-Chapter: Exploratory factor analysis<br />
+18-Chapter: Categorial data<br />
+19-Chapter: Multilevel linear models</p>
+</div>
+<div id="section-target-group-and-prerequisite" class="section level2">
+<h2>Target group and prerequisite</h2>
+<p>This interactive tutorial is primarily intended for people who work through DSUR and want to have more interactive exercises using R. I assume the same level of background knowledge as in DSUR, namely nothing:</p>
+<p>“<em>In essence, I assume you know nothing about statistics, but I do assume you have some very basic grasp of computers … and math.</em>” (DSUR, p.XXV)</p>
+</div>
+<div id="section-learning-outcomes" class="section level2">
+<h2>Learning outcomes</h2>
+<p>The following learning outcomes provide information at the course level. As there are different levels in a curriculum (course, module/chapter lesson/section etc.) with their own learning outcomes only 3-5 learning outcomes on each level is sufficent. In formulating the following outcomes I am applying the taxonomy by Anderson &amp; Krathwohl (2001, 2002) which is an extended and revised edition of the original taxonomy by Bloom (1956).</p>
+<p>Having successfully completed this interactive course you will be able to:</p>
+<ul>
+<li>manipulate and transform data with R to bring them in a format suitable for exploratory data analysis</li>
+<li>create high quality data visualizations with the R package ggplot2</li>
+<li>implementing of statistical procedures within the R environment</li>
+<li>programming an analysis with R in such a way that the script can be used with minimal effort for similar datasets and analyses</li>
+</ul>
+<p><strong>References:</strong></p>
+<ul>
+<li>Anderson, L. W. (2002). Revising Bloom’s taxonomy. Columbus, OH: Ohio State University.</li>
+<li>Anderson, L. W., &amp; Krathwohl, D. R. (2001). A taxonomy for learning, teaching, and assessing: a revision of Bloom’s taxonomy of educational objectives. New York: Longman.</li>
+<li>Bloom, B. S., &amp; Krathwohl, D. R. (1956). Taxonomy of Educational Objectives Book 1: Cognitive Domain (2nd ed.). Longman.</li>
+</ul>
+</div>
+<div id="section-structure" class="section level2">
+<h2>Structure of this tutorial</h2>
+<p>I tried to follow as exactly as possible the structure of DSUR. But sometimes I had to develop other sequeneces. This is esepcially true for the first two chapters as DSUR starts with explaining R in the third chapter. To provide for the R newbies some meaningful exercises even for the first two chapters I had to antedate some content (e.g. how to install R, to explain the elements of the graphical user interface <code>GUI</code> etc.</p>
+<p>Sometimes I added R related information or even decided to depart from DSUR content. The last is especially true with <code>RStudio</code> which installation and GIUs I used instead of the standard R Interface or the program package <code>R Commander</code>. But I have noted this differences within a yellow box.</p>
+<div class="alert alert-warning" role="alert">
+<p>In yellow boxes I will mention differences to the accompanying source of DSUR.</p>
+</div>
+</div>
+<div id="section-how-to-use-this-tutorial" class="section level2">
+<h2>How to use this tutorial?</h2>
+<p>[Here I will explain the different display modes and required actions]</p>
+</div>
+<div id="section-learning-outcome" class="section level2">
+<h2>Learning Outcome</h2>
+</div>
+<div id="section-tools-used-and-source-code" class="section level2">
+<h2>Tools used and source code</h2>
+<p>This interactive course is written in R Markdown and uses the <a href="https://rstudio.github.io/learnr/"><code>learnr</code></a> package in combination with the <a href="https://github.com/dtkaplan/checkr"><code>checkr</code></a>. The source code can be inspected at <a href="https://github.com/petzi53/DSUR">my GitHub account</a>.</p>
+<p>I have written this tutorial to rebuild my own competences in statistics and at the same time to improve my R practice. As I am not an expert on both subject please help to improve this tutorial via PRs or <a href="mailto:peter_baumgartner@me.com">contact me</a> for errors or other improvements.</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+library(checkr)
+tutorial_options(exercise.checker = checkr::check_for_learnr)
+knitr::opts_chunk$set(
+        message = T,
+        error = T,
+        warning = T,
+        comment = '##',
+        highlight = T,
+        prompt = F,
+        echo = F
+        )
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap-3.3.5"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery-1.11.3"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.0.13"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/fontawesome-all.min.js","js/fa-v4-shims.min.js"]},{"type":"character","attributes":{},"value":["css/fa-svg-with-js.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["localforage"]},{"type":"character","attributes":{},"value":["1.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/localforage"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["localforage.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">DSUR Tutorial</h2>
+<h4 class="author"><em>Peter Baumgartner</em></h4>
+<h4 class="date"><em>2018-06-18</em></h4>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+
+</html>

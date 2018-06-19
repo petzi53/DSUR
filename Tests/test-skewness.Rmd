@@ -1,0 +1,114 @@
+---
+title: "normal.Rmd"
+author: "Peter Baumgartner"
+date: "17 6 2018"
+output: html_document
+---
+
+# Distributions
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Create normal distribution with skewness
+
+
+```{r}
+library(ggplot2)
+library(moments)
+set.seed(1234)
+tn <- rnorm(100000, mean = 10)
+qplot(tn, geom = 'histogram', bins = 100) + xlab('Numbers')
+skewness(tn)
+tr <- tn ^ 6
+qplot(tr, geom = 'histogram', bins = 100) + xlab('Numbers')
+skewness(tr)
+tl <- sqrt(log10(tn))
+qplot(tl, geom = 'histogram', bins = 100) + xlab('Numbers')
+skewness(tl)
+n.sample <- rnorm(n = 10000, mean = 55, sd = 4.5)
+skewness(n.sample)
+qplot(tl, geom = 'histogram', bins = 100) + xlab('Numbers')
+datasim <- data.frame(n.sample)
+ggplot(datasim, aes(x = n.sample), binwidth = 2) + 
+       geom_histogram(aes(y = ..density..), fill = 'red', alpha = 0.5) + 
+       geom_density(colour = 'blue') + xlab(expression(bold('Simulated Samples'))) + 
+       ylab(expression(bold('Density')))
+```
+
+## Create beta distribution with skewness
+
+```{r}
+library(ggplot2)
+library(moments)
+set.seed(1234)
+tn <- rbeta(10000,5,5)
+qplot(tn, geom = 'histogram', binwidth = 0.01) + xlab('Numbers')
+mean(tn)
+median(tn)
+tl <- rbeta(10000,2,5)
+qplot(tl, geom = 'histogram', binwidth = 0.01) + xlab('Numbers')
+mean(tl)
+median(tl)
+tr <- rbeta(10000,5,2)
+qplot(tr, geom = 'histogram', binwidth = 0.01) + xlab('Numbers')
+mean(tr)
+median(tr)
+```
+
+```{r}
+library(ggplot2)
+library(moments)
+set.seed(1234)
+x <- rnorm(10000)
+all.moments(x, order.max = 4)
+all.moments(x, central = TRUE, order.max = 4)
+all.moments(x, absolute = TRUE, order.max = 4)
+all.moments(x, central = TRUE, absolute = TRUE, order.max = 4)
+```
+
+## Generate perfect normal distribution manually
+
+```{r generate-perfect-normal-distribution}
+library(ggplot2)
+library(moments)
+t <- c(
+    rep(65, 3),
+    rep(70, 6),
+    rep(75, 9),
+    rep(80,12),
+    rep(85,15),
+    rep(90,18),
+    rep(95,21),
+    rep(100,24),
+    rep(135, 3),
+    rep(130, 6),
+    rep(125, 9),
+    rep(120,12),
+    rep(115,15),
+    rep(110,18),
+    rep(105,21)
+    )
+qplot(t, geom = 'histogram', binwidth = 5) + xlab('Numbers')
+```
+
+## Create perfect normal distribution programmatically
+
+```{r generate-perfect-normal-distribution-2}
+library(ggplot2)
+library(moments)
+x <- 1
+t <- NULL
+for (i in 65:100) {
+    t <- c(t, rep(i,x))
+    x <- x + 1
+}
+x <- 35
+for (j in 101:135) {
+    t <- c(t, rep(j,x))
+    x <- x - 1
+}
+qplot(t, geom = 'histogram', binwidth = 3) + xlab('Numbers')
+```

@@ -3,20 +3,20 @@ title: "Chapter 01 of DSUR"
 author: "Peter Baumgartner"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    pandoc_args: --number-offset=0,0
-    toc: yes
-    toc_depth: '4'
-    latex_engine: xelatex
-  word_document:
-    toc: yes
-    toc_depth: '4'
   html_notebook:
     fig_caption: yes
     number_sections: yes
     pandoc_args: --number-offset=0,0
     toc: yes
     toc_depth: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
+    pandoc_args: --number-offset=0,0
+    toc: yes
+    toc_depth: '4'
+    latex_engine: xelatex
   github_document:
     toc: yes
     toc_depth: 4
@@ -35,7 +35,8 @@ knitr::opts_chunk$set(
         warning = F,
         comment = NA,
         highlight = T,
-        prompt = T
+        prompt = T,
+        echo = T
         )
 
 ```
@@ -70,7 +71,7 @@ nff <- sort(nff_scan)
 nff_scan
 ```
 
-## The Mode
+## The Mode {#mode}
 
 There is no mode-function in the base R module. See https://bit.ly/R-mode.
 But there are many possibilites to programm this function.
