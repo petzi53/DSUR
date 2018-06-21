@@ -15,6 +15,8 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(checkr)
+library(ggplot2)
+library(tidyverse)
 tutorial_options(exercise.checker = checkr::check_for_learnr)
 knitr::opts_chunk$set(
         message = T,
@@ -87,6 +89,61 @@ Recapitulate in your mind the following questions and compare it with the text i
 + What are the mode, median and mean?
 + What is the normal distribution?
 
+## Geyser Demo
+
+
+```{r data, include=FALSE}
+faithful_data <- sample_n(faithful, 100)
+```
+
+
+```{r}
+selectInput("n_breaks", label = "Number of bins:",
+            choices = c(10, 20, 35, 50), selected = 20)
+
+sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+            min = 0.2, max = 2, value = 1, step = 0.2)
+```
+
+
+```{r}
+plotOutput("eruptions")
+```
+
+```{r, context="server"}
+output$eruptions <- renderPlot({
+  hist(faithful_data$eruptions, probability = TRUE,
+       breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser Eruption Duration")
+
+  dens <- density(faithful_data$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+```
+
+## Distributions
+
+
+```{r my-dist-ui1, context="render"}
+actionButton(inputId = "normal", label = "Normal")
+actionButton(inputId = "right", label = "Right-skewed")
+actionButton(inputId = "left", label = "Left-skewed")
+            
+plotOutput("hist1")
+```
+
+```{r my-dist-server1, context="server"}
+rv <- reactiveValues(data = rbeta(10000,5,5))
+
+observeEvent(input$normal, {rv$data <- rbeta(10000,5,5)})
+observeEvent(input$right,  {rv$data <- rbeta(10000,2,5)})
+observeEvent(input$left,   {rv$data <- rbeta(10000,5,2)})
+
+output$hist1 <- renderPlot({ 
+    hist(rv$data) 
+})
+```
+
 
 ## The Mode
 
@@ -95,6 +152,7 @@ Recapitulate in your mind the following questions and compare it with the text i
 When I first looked how to calculate the mode of a vector I was suprised to learn that there is no mode function in the `base` R module. Or better said, there is a `mode()` function, but it tells you the internal storage mode of the object, not the value that occurs the most in its argument. 
 
 According to the interesting, but high-level discussion at [StackOverflow](https://stackoverflow.com/questions/2547402/is-there-a-built-in-function-for-finding-the-mode) there are several possibilities. 
+
 
 I will pick two of them:
 
@@ -607,5 +665,58 @@ question("If the scores on a test have a mean of 26 and a standard deviation of 
 ```
 
 
-
 <!-- ## Measures of Central Tendency -->
+
+## Shiny test
+
+```{r shiny-ui-test1}
+
+sliderInput(inputId = "num", 
+    label = "Choose a number", 
+    value = 25, min = 1, max = 100)
+plotOutput("hist")
+```
+
+```{r shiny-server-test1, context="server"}
+
+output$hist <- renderPlot(hist(rnorm(input$num)))
+
+
+```
+
+## Shiny test 2
+
+```{r shiny-ui-test2}
+
+headerPanel('Iris k-means clustering')
+sidebarPanel(
+    selectInput('xcol', 'X Variable', names(iris)),
+    selectInput('ycol', 'Y Variable', names(iris),
+      selected = names(iris)[[2]]),
+    numericInput('clusters', 'Cluster count', 3,
+      min = 1, max = 9)
+    ) # end sidebarPanel
+mainPanel(
+    plotOutput('plot1')
+) # end of mainPanel
+
+```
+
+```{r shiny-server-test2, context="server"}
+selectedData <- reactive({
+    iris[, c(input$xcol, input$ycol)]
+})
+
+clusters <- reactive({
+    kmeans(selectedData(), input$clusters)
+})
+
+output$plot1 <- renderPlot({
+    par(mar = c(5.1, 4.1, 0, 1))
+    plot(selectedData(),
+         col = clusters()$cluster,
+         pch = 20, cex = 3)
+    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+})
+```
+
