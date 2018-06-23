@@ -1,5 +1,5 @@
 ---
-title: "Chapter 01 of DSUR"
+title: "DSUR Chap. 01"
 author: "Peter Baumgartner"
 date: "`r Sys.Date()`"
 output: 
@@ -17,6 +17,7 @@ library(learnr)
 library(checkr)
 library(ggplot2)
 library(tidyverse)
+library(modeest)
 tutorial_options(exercise.checker = checkr::check_for_learnr)
 knitr::opts_chunk$set(
         message = T,
@@ -28,8 +29,9 @@ knitr::opts_chunk$set(
         echo = F
         )
 
-# --------------------------------------------------------------
+# Global Variables --------------------------------------------------------------
 source('www/check_test.R')
+theme_update(plot.title = element_text(hjust = 0.5, face = "bold"))
 nff <- c(108, 103, 252, 121, 93, 57, 40, 53, 22, 116, 98)
 ```
 
@@ -38,6 +40,7 @@ nff <- c(108, 103, 252, 121, 93, 57, 40, 53, 22, 116, 98)
 ## Overview of Chapter 01
 
 > In essence, I assume you know nothing about statistics, but I do assume you have some very basic grasp of computers ... and math. (DSUR, p.XXV)
+
 
 
 ### Basic notions
@@ -75,7 +78,7 @@ The second part of the chapter provides basic information for analysing data:
 + Fitting statistical models to data
     - Null hypothesis
     - Alternative (experimental) hypthesis
-    
+
 ### Summary
 
 Recapitulate in your mind the following questions and compare it with the text in the book chapter:
@@ -89,69 +92,86 @@ Recapitulate in your mind the following questions and compare it with the text i
 + What are the mode, median and mean?
 + What is the normal distribution?
 
-## Geyser Demo
+## Frequency distributions
 
+### Introductory video
 
-```{r data, include=FALSE}
-faithful_data <- sample_n(faithful, 100)
-```
+<!-- <p><img src="https://www.youtube.com/watch?v=24YCewQ8s3M" /></p> -->
 
-
-```{r}
-selectInput("n_breaks", label = "Number of bins:",
-            choices = c(10, 20, 35, 50), selected = 20)
-
-sliderInput("bw_adjust", label = "Bandwidth adjustment:",
-            min = 0.2, max = 2, value = 1, step = 0.2)
-```
-
-
-```{r}
-plotOutput("eruptions")
-```
-
-```{r, context="server"}
-output$eruptions <- renderPlot({
-  hist(faithful_data$eruptions, probability = TRUE,
-       breaks = as.numeric(input$n_breaks),
-       xlab = "Duration (minutes)", main = "Geyser Eruption Duration")
-
-  dens <- density(faithful_data$eruptions, adjust = input$bw_adjust)
-  lines(dens, col = "blue")
-})
-```
-
-## Distributions
-
+## Explore skewed distrubtions
 
 ```{r my-dist-ui1, context="render"}
-actionButton(inputId = "normal", label = "Normal")
-actionButton(inputId = "right", label = "Right-skewed")
-actionButton(inputId = "left", label = "Left-skewed")
-            
-plotOutput("hist1")
+    fluidRow(
+        column(3,
+            radioButtons("type", "Choose a distribution:",
+                           c("Normal" = "norm",
+                             "Right-skewed" = "right",
+                             "Left-skewed" = "left")
+                        )
+            ),
+        column(9, htmlOutput("distText"))
+    ) # end of fluidRow
+    fluidRow(
+        column(8,
+              plotOutput("distPlot")
+              )
+)
+
+
+
+
+
 ```
 
-```{r my-dist-server1, context="server"}
-rv <- reactiveValues(data = rbeta(10000,5,5))
 
-observeEvent(input$normal, {rv$data <- rbeta(10000,5,5)})
-observeEvent(input$right,  {rv$data <- rbeta(10000,2,5)})
-observeEvent(input$left,   {rv$data <- rbeta(10000,5,2)})
 
-output$hist1 <- renderPlot({ 
-    hist(rv$data) 
+```{r my-dist-server1,  context="server"}
+
+explainNormal <- "This is the <strong>normal</strong> distribution"
+explainRight  <- "This is the right-skewed distribution"
+explainLeft   <- "This is the left-skewed distribution"
+
+ output$distPlot <- renderPlot({
+    switch(input$type,
+        norm    = {histo <- as_tibble(rbeta(10000,5,5))
+                  caption <- "Normal distribution"
+                  output$distText <- renderText(explainNormal)},
+        right   = {histo <- as_tibble(rbeta(10000,2,5))
+                  caption <- "Positivey or right-skewed distribution"
+                  output$distText <- renderText(explainRight)},
+        left    = {histo <- as_tibble(rbeta(10000,5,2))
+                  caption <- "Negatively or left-skewed distribution"
+                  output$distText <- renderText(explainLeft)}
+      )
+ggplot(histo, aes(value)) +
+        geom_histogram(aes(y = ..density..),
+                       alpha = 0.25, fill = "blue", binwidth = .025) +
+        stat_function(fun = dnorm,
+                      args = c(mean = mean(histo$value),
+                               sd = sd(histo$value)),
+                      col = "tomato") +
+        labs(
+            title = caption,
+            x = "Score",
+            y = "Density"
+        ) +
+    labs(caption = "lines: black = mode, yellow = mean, green = median")
 })
 ```
 
+## Frequency distributions: Kurtosos
+
+### Introductory video
+
+### Explore
 
 ## The Mode
 
 ### Personal remark
 
-When I first looked how to calculate the mode of a vector I was suprised to learn that there is no mode function in the `base` R module. Or better said, there is a `mode()` function, but it tells you the internal storage mode of the object, not the value that occurs the most in its argument. 
+When I first looked how to calculate the mode of a vector I was suprised to learn that there is no mode function in the `base` R module. Or better said, there is a `mode()` function, but it tells you the internal storage mode of the object, not the value that occurs the most in its argument.
 
-According to the interesting, but high-level discussion at [StackOverflow](https://stackoverflow.com/questions/2547402/is-there-a-built-in-function-for-finding-the-mode) there are several possibilities. 
+According to the interesting, but high-level discussion at [StackOverflow](https://stackoverflow.com/questions/2547402/is-there-a-built-in-function-for-finding-the-mode) there are several possibilities.
 
 
 I will pick two of them:
@@ -204,7 +224,7 @@ mfv(nff_mode)
 
 As programming R functions is an advanced topic I will just provide some information in this section and abstain from interactive exercises. You are free to skip this section completly and continue with [The Median](#section-the-median).
 
-The following R chunk code looks a little bit frightening So let's try it out and then I explain how it works in detail. 
+The following R chunk code looks a little bit frightening So let's try it out and then I explain how it works in detail.
 
 
 ```{r write-Mode-function, exercise=TRUE, exercise.setup = "prepare-nff-mode", exercise.startover=FALSE}
@@ -218,11 +238,11 @@ Mode(nff_mode)
 
 Execept of the last line the above code chunk generates a function with the name Mode. The capital 'M' in our `Mode()` function is important as R is case sensitive. With a small 'm' it would return the storage mode of an object and not the most frequent value(s).
 
-The parenthesis `(x)` signals that we have to deliver to this function a value. In our case -- this is the last line of the chunk -- we call the Mode function with the vector variable `nff_mode`. 
+The parenthesis `(x)` signals that we have to deliver to this function a value. In our case -- this is the last line of the chunk -- we call the Mode function with the vector variable `nff_mode`.
 
-All commands inside the function have to be written between curly braces `{}`. The last line before the closing curly brace returns a value to the calling function. We could have used explicitly the `return()` function, but this is in R not common. 
+All commands inside the function have to be written between curly braces `{}`. The last line before the closing curly brace returns a value to the calling function. We could have used explicitly the `return()` function, but this is in R not common.
 
-We could have captured the result of the function by assigning it to a new variable like `t <- Mode(nff_mode)`. But this is here not necessary. 
+We could have captured the result of the function by assigning it to a new variable like `t <- Mode(nff_mode)`. But this is here not necessary.
 
 The above programmed new 'Mode'-function uses `unique()`. The unique function returns a vector, with duplicate elements removed.
 
@@ -666,57 +686,4 @@ question("If the scores on a test have a mean of 26 and a standard deviation of 
 
 
 <!-- ## Measures of Central Tendency -->
-
-## Shiny test
-
-```{r shiny-ui-test1}
-
-sliderInput(inputId = "num", 
-    label = "Choose a number", 
-    value = 25, min = 1, max = 100)
-plotOutput("hist")
-```
-
-```{r shiny-server-test1, context="server"}
-
-output$hist <- renderPlot(hist(rnorm(input$num)))
-
-
-```
-
-## Shiny test 2
-
-```{r shiny-ui-test2}
-
-headerPanel('Iris k-means clustering')
-sidebarPanel(
-    selectInput('xcol', 'X Variable', names(iris)),
-    selectInput('ycol', 'Y Variable', names(iris),
-      selected = names(iris)[[2]]),
-    numericInput('clusters', 'Cluster count', 3,
-      min = 1, max = 9)
-    ) # end sidebarPanel
-mainPanel(
-    plotOutput('plot1')
-) # end of mainPanel
-
-```
-
-```{r shiny-server-test2, context="server"}
-selectedData <- reactive({
-    iris[, c(input$xcol, input$ycol)]
-})
-
-clusters <- reactive({
-    kmeans(selectedData(), input$clusters)
-})
-
-output$plot1 <- renderPlot({
-    par(mar = c(5.1, 4.1, 0, 1))
-    plot(selectedData(),
-         col = clusters()$cluster,
-         pch = 20, cex = 3)
-    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
-})
-```
 

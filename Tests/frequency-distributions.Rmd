@@ -2,18 +2,22 @@
 title: "Frequency Distribution"
 author: "Peter Baumgartner"
 date: "`r Sys.Date()`"
-output: 
-  html_notebook: 
+output:
+  html_notebook:
     fig_caption: yes
     number_sections: yes
     theme: cerulean
+    toc: yes
+  html_document:
+    df_print: paged
     toc: yes
 ---
 
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(moments)
+library(modeest)
+library(shiny)
 knitr::opts_chunk$set(
     eval = TRUE,
     include = TRUE,
@@ -36,7 +40,7 @@ theme_update(plot.title = element_text(hjust = 0.5))
 # Create distributions
 
 ```{r create-distributions}
-set.seed(1234)
+set.seed(1234) # tested also with 1111
 d.normal <- as_tibble(rbeta(10000,5,5))
 d.skewed.pos <- as_tibble(rbeta(10000,2,5))
 d.skewed.neg <- as_tibble(rbeta(10000,5,2))
@@ -44,12 +48,23 @@ d.skewed.neg <- as_tibble(rbeta(10000,5,2))
 
 # Display distributions
 
+## Histogram
+
+```{r histogram}
+ggplot(diamonds, aes(price)) +
+    stat_function(fun = dnorm, 
+              args = c(mean = mean(diamonds$price), 
+              sd = sd(diamonds$price)),  col = "tomato") +
+    geom_histogram(aes(y = ..density..), binwidth = 500)
+```
+
 ## Normal distribution
 
 ```{r display-normal-distribution}
 p.normal <- ggplot(d.normal, aes(value)) +
-        geom_histogram(aes(y = ..density..), alpha = 0.25, fill = "blue", binwidth = .025) +
-        stat_function(fun = dnorm, args = c(mean = mean(d.normal$value), sd = sd(d.normal$value)), col = "tomato") +
+        geom_histogram(aes(y = ..density..),
+                alpha = 0.25, fill = "blue", binwidth = .025) +
+        stat_function(fun = dnorm, args = c(mean = mean(d.normal$value), sd = sd(d.normal$value)),  col = "tomato") +
     labs(
         title = "Normal distribution",
         x = "Score",
@@ -91,21 +106,28 @@ p.skewed.neg
 ## Normal distributionn
 
 ```{r display-vlines-normal-distribution}
-
+library(modeest)
+M <- mlv(d.normal$value, method = "discrete")[[1]]
 p.normal.line <- p.normal +
     geom_vline(
-        xintercept = mean(d.normal$value),
+        xintercept = M,
         linetype = "dashed",
-        color = "red",
-        size = 2
+        color = "yellow",
+        size = 1
+        ) +
+    geom_vline(
+        xintercept = mean(d.normal$value),
+        linetype = "dotdash",
+        color = "blue",
+        size = 1
         ) +
     geom_vline(
         xintercept = median(d.normal$value),
-        linetype = "dashed",
-        color = "black",
+        linetype = "twodash",
+        color = "green",
         size = 1
         ) +
-    labs(caption = "dashed lines: red = mean, black = median")
+    labs(caption = "lines: black = mode, yellow = mean, green = median")
     
 p.normal.line
 
@@ -114,21 +136,28 @@ p.normal.line
 ## Distribution positively skewed
 
 ```{r display-vlines-positively-skewed-distribution}
-
+library(modeest)
+M.pos <- mlv(d.skewed.pos$value, method = "naive", bw = 0.025)[[1]]
 p.skewed.pos.line <- p.skewed.pos +
+    geom_vline(
+        xintercept = M.pos,
+        linetype = "dashed",
+        color = "black",
+        size = 1
+        ) +
     geom_vline(
         xintercept = mean(d.skewed.pos$value),
         linetype = "dashed",
-        color = "red",
+        color = "blue",
         size = 1
         ) +
     geom_vline(
         xintercept = median(d.skewed.pos$value),
         linetype = "dashed",
-        color = "black",
+        color = "green",
         size = 1
         ) +
-    labs(caption = "dashed lines: red = mean, black = median")
+    labs(caption = "lines: black = mode, blue = mean, green = median")
 p.skewed.pos.line
 
 ```
@@ -136,21 +165,29 @@ p.skewed.pos.line
 ## Distribution negatively skewed
 
 ```{r display-vlines-negatively-skewed-distribution}
-
+library(modeest)
+M.neg <- mlv(d.skewed.neg$value, method = "naive", bw = 0.025)[[1]]
 p.skewed.neg.line <- p.skewed.neg +
+    geom_vline(
+        xintercept = M.neg,
+        linetype = "dashed",
+        color = "black",
+        size = 1
+        ) +
     geom_vline(
         xintercept = mean(d.skewed.neg$value),
         linetype = "dashed",
-        color = "red",
+        color = "blue",
         size = 1
         ) +
     geom_vline(
         xintercept = median(d.skewed.neg$value),
         linetype = "dashed",
-        color = "black",
+        color = "green",
         size = 1
         ) +
-    labs(caption = "dashed lines: red = mean, black = median")
+    labs(caption = "lines: black = mode, blue = mean, green = median")
 p.skewed.neg.line
 
 ```
+
