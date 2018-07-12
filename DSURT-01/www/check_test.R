@@ -43,3 +43,57 @@ check_compute_median <- function(USER_CODE) {
     # check_binding works, but it is not s useful with a more complex task.
 }
 
+check_compute_mean <- function(USER_CODE) {
+    code <- for_checkr(USER_CODE)
+
+    t1 <- line_calling(code, mean,
+                       message = "Use function `mean()` to compute the mean")
+    if (failed(t1)) return(t1)
+
+    t_num <- numeric_arg(code, passif(TRUE, "OK!"),
+                         message = "You didn't use a numeric vector!")
+    if (failed(t_num)) return(t_num)
+
+    check_binding(code, mean(nff), passif(TRUE, "Well done!"),
+                  message = "No, you need to call `mean()` with `nff` as argument.")
+
+    # How to test if the vector 'nff' is used?
+    # check_binding works, but it is not s useful with a more complex task.
+}
+
+check_compute_range <- function(USER_CODE) {
+    code <- for_checkr(USER_CODE)
+
+    t1 <- line_calling(code, range,
+                       message = "Use function `range()` to compute the mean")
+    if (failed(t1)) return(t1)
+
+    t_num <- numeric_arg(code, passif(TRUE, "OK!"),
+                         message = "You didn't use a numeric vector!")
+    if (failed(t_num)) return(t_num)
+
+    check_binding(code, range(nff), passif(TRUE, "Well done!"),
+                  message = "No, you need to call `range()` with `nff` as argument.")
+
+    # How to test if the vector 'nff' is used?
+    # check_binding works, but it is not s useful with a more complex task.
+}
+
+check_compute_quantile <- function(USER_CODE) {
+    code <- for_checkr(USER_CODE)
+
+    t1 <- line_calling(code, quantile,
+                       message = "Use function `quantile()` to compute the quartiles")
+    if (failed(t1)) return(t1)
+
+    t_num <- numeric_arg(code, passif(TRUE, "OK!"),
+                         message = "You didn't use a numeric vector!")
+    if (failed(t_num)) return(t_num)
+
+    check_binding(code, quantile(nff), passif(TRUE, "Well done!"),
+                  message = "No, you need to call `quantile()` with `nff` as argument.")
+
+    # How to test if the vector 'nff' is used?
+    # check_binding works, but it is not s useful with a more complex task.
+}
+
