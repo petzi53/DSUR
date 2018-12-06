@@ -44,7 +44,7 @@ learnr::initialize_tutorial()
 
 This tutorial is supplementary material for [Discovering statistics using R](https://studysites.uk.sagepub.com/dsur/main.htm) by Field, A. P., Miles, J., and Field, Z. C. (2012, London: Sage). In this tutorial I provide some interactive exercises and quizzes to learn statistics **and** R. 
 
-I used 'and' instead of 'with' or 'using' as most of the interactive exercises aks to apply R code for a given statistical procedure. So learning R is more prominent as in the mentioned book, whereas the statistical content relies heavily on the explanations given in `Discovering statistics using R` (abbreviated with `DSUR`). To benefit most of this course material you definitively have to buy a copy of DSUR.
+I used 'and' instead of 'with' or 'using' as most of the interactive exercises ask to apply R code for a given statistical procedure. So learning R is more prominent as in the mentioned book, whereas the statistical content relies heavily on the explanations given in `Discovering statistics using R` (abbreviated with `DSUR`). To benefit most of this course material you definitively have to buy a copy of DSUR.
 
 
 <center>
